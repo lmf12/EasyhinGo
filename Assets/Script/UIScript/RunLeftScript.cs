@@ -19,7 +19,7 @@ public class RunLeftScript : MonoBehaviour,IPointerDownHandler,IPointerUpHandler
 	// 当按钮被按下后系统自动调用此方法  
 	public void OnPointerDown (PointerEventData eventData) {
 		
-		marry.GetComponent<MarryScript> ().moveLeft (0.1f);
+		marry.GetComponent<MarryScript> ().moveLeft (0.05f);
 	}  
 
 	// 当按钮抬起的时候自动调用此方法  

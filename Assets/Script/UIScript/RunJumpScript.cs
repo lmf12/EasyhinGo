@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems; 
 using System.Collections;
 
-public class RunRightScript : MonoBehaviour,IPointerDownHandler,IPointerUpHandler {
+public class RunJumpScript : MonoBehaviour,IPointerDownHandler,IPointerUpHandler {
 
 	public GameObject marry;
 
@@ -19,12 +19,10 @@ public class RunRightScript : MonoBehaviour,IPointerDownHandler,IPointerUpHandle
 	// 当按钮被按下后系统自动调用此方法  
 	public void OnPointerDown (PointerEventData eventData) {
 
-		marry.GetComponent<MarryScript> ().moveRight (0.05f);
+		marry.GetComponent<MarryScript> ().jump();
 	}  
 
 	// 当按钮抬起的时候自动调用此方法  
 	public void OnPointerUp (PointerEventData eventData) {
-
-		marry.GetComponent<MarryScript> ().stopMoving();
 	} 
 }
