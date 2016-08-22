@@ -20,6 +20,21 @@ public class MarryScript : MonoBehaviour {
 	void Update () {
 
 		if (isMoving) {
+
+			//边界判断
+			Vector2 worldMinLoc = screenLogic.GetComponent<ScreenScript> ().getMinWorldLoc ();
+			Vector2 worldMaxLoc = screenLogic.GetComponent<ScreenScript> ().getMaxWorldLoc ();
+			if (transform.position.x < worldMinLoc.x) {
+				transform.position = new Vector2(worldMinLoc.x, transform.position.y);
+				this.stopMoving ();
+				return;
+			}
+			if (transform.position.x > worldMaxLoc.x) {
+				transform.position = new Vector2(worldMaxLoc.x, transform.position.y);
+				this.stopMoving ();
+				return;
+			}
+
 			this.gameObject.transform.Translate (new Vector2 (this.speed, 0));
 
 			//相机跟随
@@ -29,7 +44,7 @@ public class MarryScript : MonoBehaviour {
 	}
 
 	public void moveLeft(float speed) {
-		
+
 		isMoving = true;
 		if (isRight) {
 			this.turnFace ();
@@ -88,14 +103,10 @@ public class MarryScript : MonoBehaviour {
 		//左移
 		if (transform.position.x < screenWorldLoc.x && screenMinLoc.x > worldMinLoc.x) {
 
-			print ("" + screenMinLoc.x + " " + worldMinLoc.x);
-
 			Camera.main.transform.position = new Vector3 (transform.position.x, screenWorldLoc.y, screenWorldLoc.z);
 		}
 		//右移
 		if (transform.position.x > screenWorldLoc.x && screenMaxLoc.x < worldMaxLoc.x) {	
-
-			print ("" + screenMaxLoc.x + " " + worldMaxLoc.x);
 
 			Camera.main.transform.position = new Vector3 (transform.position.x, screenWorldLoc.y, screenWorldLoc.z);
 		}
