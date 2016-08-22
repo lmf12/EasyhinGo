@@ -43,7 +43,7 @@ public class ScreenScript : MonoBehaviour {
 	//获取世界最小点
 	public Vector2 getMinWorldLoc() {
 
-		return new Vector2 (-8.4f, -11);
+		return new Vector2 (-8, -11);
 	}
 
 	//获取世界最大点
