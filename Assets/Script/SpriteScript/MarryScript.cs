@@ -123,12 +123,28 @@ public class MarryScript : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D coll) {
 
-		isGround = true;
+		ContactPoint2D contactBegin = coll.contacts[0];
+		ContactPoint2D contactEnd = coll.contacts[coll.contacts.Length-1];
+
+		Vector2 posBegin = contactBegin.point; 
+		Vector2 posEnd = contactEnd.point; 
+
+		if (posBegin.y < transform.position.y && posEnd.y < transform.position.y) {
+			isGround = true;
+		}
 	}
 
 	void OnCollisionStay2D(Collision2D coll) {
 
-		isGround = true;
+		ContactPoint2D contactBegin = coll.contacts[0];
+		ContactPoint2D contactEnd = coll.contacts[coll.contacts.Length-1];
+
+		Vector2 posBegin = contactBegin.point; 
+		Vector2 posEnd = contactEnd.point; 
+
+		if (posBegin.y < transform.position.y && posEnd.y < transform.position.y) {
+			isGround = true;
+		}
 	}
 
 	void OnCollisionExit2D(Collision2D coll) {
