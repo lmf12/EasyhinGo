@@ -18,7 +18,7 @@ public class StarScript : MonoBehaviour {
 			transform.Translate (new Vector2(0f, 0.1f));
 		}
 
-		if (Camera.main.WorldToScreenPoint (transform.position).y > Screen.height) {
+		if (Camera.main.WorldToScreenPoint (transform.position).y > 20f) {
 
 			transform.Translate (new Vector2(0f, 10f));
 			isGet = false;

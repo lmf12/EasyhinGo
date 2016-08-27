@@ -100,25 +100,28 @@ public class MarryScript : MonoBehaviour {
 		Vector2 worldMinLoc = screenLogic.GetComponent<ScreenScript> ().getMinWorldLoc ();
 		Vector2 worldMaxLoc = screenLogic.GetComponent<ScreenScript> ().getMaxWorldLoc ();
 
+		float cameraLocX = screenWorldLoc.x;
+		float cameraLocY = screenWorldLoc.y;
+		float cameraLocZ = screenWorldLoc.z;
+
 		//上移
 		if (transform.position.y > (screenWorldLoc.y+screenMinLoc.y)*0.5f && screenMaxLoc.y < worldMaxLoc.y) {	
-			Camera.main.transform.position = new Vector3 (screenWorldLoc.x, transform.position.y+(screenWorldLoc.y-screenMinLoc.y)*0.5f, screenWorldLoc.z);
+			cameraLocY = transform.position.y + (screenWorldLoc.y - screenMinLoc.y) * 0.5f;
 		}
 		//下移
 		if (transform.position.y < (screenWorldLoc.y+screenMinLoc.y)*0.5f && screenMinLoc.y > worldMinLoc.y) {	
-
-			Camera.main.transform.position = new Vector3 (screenWorldLoc.x, transform.position.y+(screenWorldLoc.y-screenMinLoc.y)*0.5f, screenWorldLoc.z);
+			cameraLocY = transform.position.y + (screenWorldLoc.y - screenMinLoc.y) * 0.5f;
 		}
 		//左移
 		if (transform.position.x < screenWorldLoc.x && screenMinLoc.x > worldMinLoc.x) {
-
-			Camera.main.transform.position = new Vector3 (transform.position.x, screenWorldLoc.y, screenWorldLoc.z);
+			cameraLocX = transform.position.x;
 		}
 		//右移
 		if (transform.position.x > screenWorldLoc.x && screenMaxLoc.x < worldMaxLoc.x) {	
-
-			Camera.main.transform.position = new Vector3 (transform.position.x, screenWorldLoc.y, screenWorldLoc.z);
+			cameraLocX = transform.position.x;
 		}
+
+		Camera.main.transform.position = new Vector3 (cameraLocX, cameraLocY, cameraLocZ);
 
 	}
 
