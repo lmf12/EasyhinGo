@@ -4,7 +4,11 @@ using UnityEngine.UI;
 
 public class StarScript : MonoBehaviour {
 
+	public Text score;
+	public Text win;
 	private bool isGet = false;
+
+	private bool isWin = false;
 
 	// Use this for initialization
 	void Start () {
@@ -16,12 +20,19 @@ public class StarScript : MonoBehaviour {
 
 		if (isGet) {
 			transform.Translate (new Vector2(0f, 0.1f));
+			if (transform.position.y > 200f) {
+
+				transform.Translate (new Vector2(0f, 10f));
+				isGet = false;
+			}
 		}
+			
+		if (isWin) {
+			win.transform.Translate (new Vector2 (0, -2f));
 
-		if (transform.position.y > 200f) {
-
-			transform.Translate (new Vector2(0f, 10f));
-			isGet = false;
+			if (win.transform.position.y <= Screen.height / 2) {
+				Application.LoadLevel (1);
+			}
 		}
 			
 	}
@@ -33,6 +44,13 @@ public class StarScript : MonoBehaviour {
 		}
 
 		isGet = true;
+
+		score.text = "" + (int.Parse (score.text) + 1);
+
+		if (int.Parse (score.text) == 5) {
+
+			isWin = true;
+		}
 	}
 
 }
