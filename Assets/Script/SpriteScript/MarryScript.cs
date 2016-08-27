@@ -51,6 +51,8 @@ public class MarryScript : MonoBehaviour {
 
 	public void moveLeft(float speed) {
 
+		this.setClimbing (false);
+
 		isMoving = true;
 		if (isRight) {
 			this.turnFace ();
@@ -60,6 +62,8 @@ public class MarryScript : MonoBehaviour {
 	}
 
 	public void moveRight(float speed) {
+
+		this.setClimbing (false);
 
 		isMoving = true;
 		if (!isRight) {
@@ -80,6 +84,16 @@ public class MarryScript : MonoBehaviour {
 			Vector2 velocity = GetComponent<Rigidbody2D> ().velocity;
 			velocity.y = jumpVelocity;
 			GetComponent<Rigidbody2D> ().velocity = velocity;
+		}
+	}
+
+	//设置攀爬模式，此时不受重力影响
+	public void setClimbing(bool isClimb) {
+
+		if (isClimb) {
+			GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY;
+		} else {
+			GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.FreezeRotation;
 		}
 	}
 
