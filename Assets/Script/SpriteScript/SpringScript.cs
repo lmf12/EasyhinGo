@@ -17,6 +17,10 @@ public class SpringScript : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D coll) {
 
+		if (!coll.gameObject.name.Equals ("marry")) {
+			return;
+		}
+
 		ContactPoint2D contactBegin = coll.contacts[0];
 		ContactPoint2D contactEnd = coll.contacts[coll.contacts.Length-1];
 

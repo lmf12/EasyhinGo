@@ -57,11 +57,19 @@ public class LadderScript : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 
+		if (!other.gameObject.name.Equals ("marry")) {
+			return;
+		}
+
 		canClimb = true;
 		marry = other.gameObject;
 	}
 
 	void OnTriggerExit2D(Collider2D other) {
+
+		if (!other.gameObject.name.Equals ("marry")) {
+			return;
+		}
 
 		canClimb = false;
 		marry = null;

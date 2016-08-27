@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MoveFloorScript : MonoBehaviour {
 
-	private float leftLoc = 10f;
+	private float leftLoc = 8f;
 	private float rightLoc = 13f;
 	private bool isRight = true;
 	private float speed = 0.05f;
@@ -42,15 +42,27 @@ public class MoveFloorScript : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D coll) {
 
+		if (!coll.gameObject.name.Equals ("marry")) {
+			return;
+		}
+
 		marry = coll.gameObject;
 	}
 
 	void OnCollisionStay2D(Collision2D coll) {
 
+		if (!coll.gameObject.name.Equals ("marry")) {
+			return;
+		}
+
 		marry = coll.gameObject;
 	}
 
 	void OnCollisionExit2D(Collision2D coll) {
+
+		if (!coll.gameObject.name.Equals ("marry")) {
+			return;
+		}
 
 		marry = null;
 	}

@@ -28,6 +28,10 @@ public class StarScript : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 
+		if (!other.gameObject.name.Equals ("marry")) {
+			return;
+		}
+
 		isGet = true;
 	}
 

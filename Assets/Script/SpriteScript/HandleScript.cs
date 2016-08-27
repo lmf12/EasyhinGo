@@ -51,10 +51,18 @@ public class HandleScript : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 
+		if (!other.gameObject.name.Equals ("marry")) {
+			return;
+		}
+
 		canSwitch = true;
 	}
 
 	void OnTriggerExit2D(Collider2D other) {
+
+		if (!other.gameObject.name.Equals ("marry")) {
+			return;
+		}
 
 		canSwitch = false;
 	}
