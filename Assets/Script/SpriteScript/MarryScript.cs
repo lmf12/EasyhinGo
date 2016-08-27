@@ -101,7 +101,8 @@ public class MarryScript : MonoBehaviour {
 		Vector2 worldMaxLoc = screenLogic.GetComponent<ScreenScript> ().getMaxWorldLoc ();
 
 		//上移
-		if (transform.position.y > screenWorldLoc.y && screenMaxLoc.y < worldMaxLoc.y) {			
+		if (transform.position.y > (screenWorldLoc.y+screenMinLoc.y)*0.5f && screenMaxLoc.y < worldMaxLoc.y) {	
+			Camera.main.transform.position = new Vector3 (screenWorldLoc.x, transform.position.y+(screenWorldLoc.y-screenMinLoc.y)*0.5f, screenWorldLoc.z);
 		}
 		//下移
 		if (transform.position.y < (screenWorldLoc.y+screenMinLoc.y)*0.5f && screenMinLoc.y > worldMinLoc.y) {	
