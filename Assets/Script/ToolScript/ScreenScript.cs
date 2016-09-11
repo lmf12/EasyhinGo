@@ -9,7 +9,7 @@ public class ScreenScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 	
 	}
 

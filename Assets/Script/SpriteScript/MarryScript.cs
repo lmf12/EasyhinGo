@@ -17,7 +17,7 @@ public class MarryScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
 		Vector2 worldMinLoc = screenLogic.GetComponent<ScreenScript> ().getMinWorldLoc ();
 		Vector2 worldMaxLoc = screenLogic.GetComponent<ScreenScript> ().getMaxWorldLoc ();

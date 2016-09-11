@@ -17,7 +17,7 @@ public class MoveFloorScript : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 	
 		if (transform.position.x >= this.rightLoc) {
 			transform.position = new Vector2(this.rightLoc, transform.position.y);

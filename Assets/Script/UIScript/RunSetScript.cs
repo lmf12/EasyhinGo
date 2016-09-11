@@ -12,7 +12,7 @@ public class RunSetScript : MonoBehaviour,IPointerDownHandler,IPointerUpHandler 
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 	
 	}
 

@@ -29,7 +29,7 @@ public class LightScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
 		float newLightX = transform.transform.position.x;
 		float newLightY = transform.transform.position.y;

@@ -16,7 +16,7 @@ public class StarScript : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
 		if (isGet) {
 			transform.Translate (new Vector2(0f, 0.1f));

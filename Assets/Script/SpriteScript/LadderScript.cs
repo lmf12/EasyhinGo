@@ -16,7 +16,7 @@ public class LadderScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 	
 		if (isClimbing && marry != null) {
 			marry.transform.position = new Vector2 (transform.position.x, marry.transform.position.y + climbSpeed);

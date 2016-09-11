@@ -17,7 +17,7 @@ public class LogScript : MonoBehaviour {
 		currentContent = logText.text;
 	}
 
-	void Update () {
+	void FixedUpdate () {
 	
 		if (!logText.text.Equals (currentContent)) {
 

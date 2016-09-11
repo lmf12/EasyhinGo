@@ -17,7 +17,7 @@ public class HandleScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 	
 		if (canScale) {
 			if (brick.transform.localScale.x - scaleSpeed <= 0) {
