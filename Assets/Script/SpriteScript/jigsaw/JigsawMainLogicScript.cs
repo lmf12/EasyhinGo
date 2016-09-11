@@ -21,7 +21,7 @@ public class JigsawMainLogicScript : MonoBehaviour {
 		
 		string rootName = "jigsaw_img_1_0";
 
-		ArrayList randomList = this.getRandomListWithCount (8);
+		ArrayList randomList = this.getRandomListWithCount ();
 
 		for (int i = 0; i < 8; ++i) {
 
@@ -45,22 +45,67 @@ public class JigsawMainLogicScript : MonoBehaviour {
 	}
 
 	// 获取0～count－1 的随机数组
-	private ArrayList getRandomListWithCount (int count) {
+	private ArrayList getRandomListWithCount () {
 
-		ArrayList list = new ArrayList ();
+		int count = 8;
 
-		for (int i = 0; i < count; ++i) {
+		int[] initList = new int[]{2, 3, 5, 6, 8, 7, 1, 0, 4};
 
-			list.Add (i);
+		ArrayList list = new ArrayList (initList);
+
+		int currentIndex = 4;
+		int times = 20;  //移动次数
+
+		//随机移动
+		for (int i = 0; i < times; ++i) {
+
+			ArrayList direction = new ArrayList();
+
+			if (currentIndex - 3 >= 0) {    //上
+
+				direction.Add (currentIndex - 3);
+			}
+			if (currentIndex + 3 <= 8) {     //下
+
+				direction.Add (currentIndex + 3);
+			}
+			if (currentIndex - 1 >= 0 && (currentIndex - 1) / 3 == currentIndex / 3) {     //左
+
+				direction.Add (currentIndex - 1);
+			}
+			if ((currentIndex + 1) / 3 == currentIndex / 3) {    //右
+
+				direction.Add (currentIndex + 1);
+			}
+
+			int target = (int)direction[(int)(Random.value * direction.Count)];
+
+			int temp = (int)list[currentIndex];
+			list[currentIndex] = list[target];
+			list [target] = temp;
+
+			currentIndex = target;
 		}
 
-		for (int i = count - 1; i >= 1; --i) {
+		//将8移到末尾
+		while (currentIndex / 3 != 2) {
 
-			int index = (int)(Random.value * (i-1));
-			int temp = (int)list [index];
-			list[index] = list[i];
-			list[i] = temp;
+			int temp = (int)list[currentIndex];
+			list[currentIndex] = list[currentIndex+3];
+			list [currentIndex+3] = temp;
+
+			currentIndex = currentIndex + 3;
 		}
+		while (currentIndex % 3 != 2) {
+
+			int temp = (int)list[currentIndex];
+			list[currentIndex] = list[currentIndex+1];
+			list [currentIndex+1] = temp;
+
+			currentIndex = currentIndex + 1;
+		}
+
+		list.RemoveAt (8);
 
 		return list;
 	}
