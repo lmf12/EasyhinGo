@@ -110,6 +110,23 @@ public class JigsawMainLogicScript : MonoBehaviour {
 		return list;
 	}
 
+	//检查是否成功
+	private bool checkIfSuccess() {
+
+		bool ifSuccess = true;
+		for (int i = 0; i < map.Count - 1; ++i) {
+
+			string currentStr = ((string)map [i]);
+
+			if (!currentStr.Substring (currentStr.Length - 1, 1).Equals ("" + (i + 1))) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	//获取下一步需要到达的位置，为-1则不可移动
 	public int getNextPostion(string name) {
 
@@ -160,6 +177,16 @@ public class JigsawMainLogicScript : MonoBehaviour {
 
 			map [index] = "";
 			map [targetIndex] = name;
+		}
+
+		//检查是否成功
+		if (checkIfSuccess()) {
+
+			string rootName = "jigsaw_img_1_0";
+
+			GameObject brick = GameObject.Find(rootName + 9);
+
+			brick.GetComponent<JigsawLastBrick> ().startAnimation ();
 		}
 	}
 }
