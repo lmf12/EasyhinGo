@@ -58,7 +58,7 @@ public class MarryScript : MonoBehaviour {
 			this.turnFace ();
 		}
 		isRight = false;
-		this.speed = -speed;
+		this.speed = speed;
 	}
 
 	public void moveRight(float speed) {
