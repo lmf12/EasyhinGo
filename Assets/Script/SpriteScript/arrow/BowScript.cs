@@ -3,16 +3,31 @@ using System.Collections;
 
 public class BowScript : MonoBehaviour {
 
+	public GameObject arrowPrefab;
+
+	private GameObject currentArrow;
+
 	private bool isTouchBegin;
+
+	private bool canShoot;
 
 	// Use this for initialization
 	void Start () {
 	
 		isTouchBegin = false;
+		canShoot = true;
 	}
 
 	// Update is called once per frame
 	void FixedUpdate () {
+
+		if (currentArrow != null && currentArrow.transform.position.y <= -10) {
+			canShoot = true;
+		}
+
+		if (!canShoot) {
+			return;
+		}
 
 		if (Input.touchCount > 0) {
 			if (Input.GetTouch (0).phase == TouchPhase.Began) {
@@ -21,12 +36,15 @@ public class BowScript : MonoBehaviour {
 
 				if (this.isPosInObj (this.gameObject, touchPos)) {
 					isTouchBegin = true;
+					currentArrow = (GameObject)Instantiate (arrowPrefab, transform.position, Quaternion.identity);
 				}
 			} else if (Input.GetTouch (0).phase == TouchPhase.Moved) {
 				
 			} else if (Input.GetTouch (0).phase == TouchPhase.Ended) {
 
 				isTouchBegin = false;
+				currentArrow.GetComponent<ArrowScript> ().beginShoot (new Vector2(10, 10));
+				canShoot = false;
 			}
 		}
 

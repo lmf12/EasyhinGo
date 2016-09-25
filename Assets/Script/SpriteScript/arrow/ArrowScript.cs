@@ -3,23 +3,28 @@ using System.Collections;
 
 public class ArrowScript : MonoBehaviour {
 
+	private bool isShoot;
+
 	// Use this for initialization
 	void Start () {
 	
-		Vector2 velocity = GetComponent<Rigidbody2D> ().velocity;
-		velocity.y = 10.0f;
-		velocity.x = 10.0f;
-		GetComponent<Rigidbody2D> ().velocity = velocity;
-
-		this.rotation (this.getSin(velocity.x, velocity.y));
+		isShoot = false;
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
 	
-		Vector2 velocity = GetComponent<Rigidbody2D> ().velocity;
+		if (isShoot) {
 
-		this.rotation (this.getSin(velocity.x, velocity.y));
+			Vector2 velocity = GetComponent<Rigidbody2D> ().velocity;
+
+			this.rotation (this.getSin (velocity.x, velocity.y));
+		}
+
+		if (transform.position.y < -15) {
+
+			Destroy (gameObject);
+		}
 	}
 
 	//旋转 从0～2pi  顺时针
@@ -40,5 +45,14 @@ public class ArrowScript : MonoBehaviour {
 	private float getSin(float x, float y) {
 
 		return y / Mathf.Sqrt (x * x + y * y);
+	}
+
+	public void beginShoot(Vector2 velocity) {
+
+		GetComponent<Rigidbody2D> ().velocity = velocity;
+		this.rotation (this.getSin(velocity.x, velocity.y));
+
+		this.isShoot = true;
+		this.GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.None;
 	}
 }
