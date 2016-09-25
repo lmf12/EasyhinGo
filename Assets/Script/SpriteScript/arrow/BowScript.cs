@@ -43,7 +43,7 @@ public class BowScript : MonoBehaviour {
 			} else if (Input.GetTouch (0).phase == TouchPhase.Ended) {
 
 				isTouchBegin = false;
-				currentArrow.GetComponent<ArrowScript> ().beginShoot (new Vector2(10, 10));
+				currentArrow.GetComponent<ArrowScript> ().beginShoot (this.getVelocity(currentArrow, 10));
 				canShoot = false;
 			}
 		}
@@ -61,7 +61,21 @@ public class BowScript : MonoBehaviour {
 
 		if (touchPos.x < objPos.x) {
 			this.rotation (this.gameObject, -this.getSin (touchPos.x - objPos.x, touchPos.y - objPos.y));
+
+			if (currentArrow != null) {
+				this.rotation (currentArrow, -this.getSin (touchPos.x - objPos.x, touchPos.y - objPos.y) - Mathf.PI / 2);
+			}
 		}
+	}
+
+	//获取速度
+	private Vector2 getVelocity(GameObject obj, float speed) {
+
+		Quaternion rotation = obj.transform.localRotation;
+
+		float angle = Mathf.Asin (rotation.z) * 2;
+
+		return new Vector2 (-speed * Mathf.Sin(angle), speed * Mathf.Cos(angle));
 	}
 
 	//物体是否被点中
