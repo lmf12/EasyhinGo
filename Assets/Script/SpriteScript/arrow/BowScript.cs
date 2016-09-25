@@ -23,6 +23,7 @@ public class BowScript : MonoBehaviour {
 
 		if (currentArrow != null && currentArrow.transform.position.y <= -10) {
 			canShoot = true;
+			currentArrow = null;
 		}
 
 		if (!canShoot) {
@@ -36,6 +37,9 @@ public class BowScript : MonoBehaviour {
 
 				if (this.isPosInObj (this.gameObject, touchPos)) {
 					isTouchBegin = true;
+					if (currentArrow != null) {
+						Destroy (currentArrow);
+					}
 					currentArrow = (GameObject)Instantiate (arrowPrefab, transform.position, Quaternion.identity);
 				}
 			} else if (Input.GetTouch (0).phase == TouchPhase.Moved) {
