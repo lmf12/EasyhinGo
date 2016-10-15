@@ -15,13 +15,19 @@ public class ArrowMainLogicScript : MonoBehaviour {
 		balloon1 = GameObject.Find ("balloon_1");
 		object1 = GameObject.Find ("object_1");
 
-		rope1 = this.drawLine (rope1, this.localToWorld(balloon1 ,object1.GetComponent<DistanceJoint2D>().connectedAnchor), this.localToWorld(object1 ,object1.GetComponent<DistanceJoint2D>().anchor));
+		if (object1.GetComponent<DistanceJoint2D> () != null) {
+			rope1 = this.drawLine (rope1, this.localToWorld (balloon1, object1.GetComponent<DistanceJoint2D> ().connectedAnchor), this.localToWorld (object1, object1.GetComponent<DistanceJoint2D> ().anchor));
+		}
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
 	
-		rope1 = this.drawLine (rope1, this.localToWorld(balloon1 ,object1.GetComponent<DistanceJoint2D>().connectedAnchor), this.localToWorld(object1 ,object1.GetComponent<DistanceJoint2D>().anchor));
+		if (object1.GetComponent<DistanceJoint2D> () != null) {
+			rope1 = this.drawLine (rope1, this.localToWorld (balloon1, object1.GetComponent<DistanceJoint2D> ().connectedAnchor), this.localToWorld (object1, object1.GetComponent<DistanceJoint2D> ().anchor));
+		} else {
+			Destroy (rope1);
+		}
 	}
 
 	GameObject drawLine(GameObject obj ,Vector2 start, Vector2 end) {
