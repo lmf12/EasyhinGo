@@ -47,7 +47,7 @@ public class BowScript : MonoBehaviour {
 			} else if (Input.GetTouch (0).phase == TouchPhase.Ended) {
 
 				isTouchBegin = false;
-				currentArrow.GetComponent<ArrowScript> ().beginShoot (this.getVelocity(currentArrow, 10));
+				currentArrow.GetComponent<ArrowScript> ().beginShoot (this.getVelocity(currentArrow, 15));
 				canShoot = false;
 			}
 		}

@@ -36,7 +36,7 @@ public class BalloonObjectScript : MonoBehaviour {
 			isPlaying = true;
 
 			moveSpeedY = (targetLoc.y - transform.position.y) / (duration / Time.fixedDeltaTime);
-			scaleSpeed = ((maxScale - 1) + (maxScale - 2))  / (duration / Time.fixedDeltaTime);
+			scaleSpeed = ((maxScale - 0.8f) + (maxScale - 2))  / (duration / Time.fixedDeltaTime);
 			thinSpead = (this.GetComponent<SpriteRenderer> ().color.a - minThin) / (duration / 2 / Time.fixedDeltaTime);
 		}
 
