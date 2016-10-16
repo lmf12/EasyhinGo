@@ -107,7 +107,9 @@ public class AskMainLogicScript : MonoBehaviour {
 					startOpenAnim (card [touchIndex]);
 				}
 			} else {
-				startCloseAnim ();
+				if (!isStartOpenAnim) {
+					startCloseAnim ();
+				}
 			}
 		} 
 	}
