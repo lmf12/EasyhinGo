@@ -54,10 +54,6 @@ public class AskMainLogicScript : MonoBehaviour {
 			card[i+9] = createCard (new Vector2(group2originX + cardWidth * (i % 3), group2originY - cardHeight * (i / 3)));
 		}
 
-		scaleSpeedX = (lastScaleX - card[0].transform.localScale.x) / (duringTime / Time.fixedDeltaTime);
-		scaleSpeedY = (lastScaleY - card[0].transform.localScale.y) / (duringTime / Time.fixedDeltaTime);
-		moveSpeedX = (lastPosX - card[0].transform.position.x) / (duringTime / Time.fixedDeltaTime);
-		moveSpeedY = (lastPosY - card[0].transform.position.y) / (duringTime / Time.fixedDeltaTime);
 	}
 		
 	void FixedUpdate () {
@@ -83,6 +79,8 @@ public class AskMainLogicScript : MonoBehaviour {
 				currentObj.transform.localScale = new Vector2 (originScaleX, originScaleY);
 				currentObj.transform.position = new Vector2 (originPosX, originPosY);
 				isStartCloseAnim = false;
+
+				currentObj.GetComponent<SpriteRenderer> ().sortingOrder = 0;
 				currentObj = null;
 			} else {
 				currentObj.transform.localScale = new Vector2 (currentObj.transform.localScale.x - scaleSpeedX, currentObj.transform.localScale.y - scaleSpeedY);
@@ -96,7 +94,18 @@ public class AskMainLogicScript : MonoBehaviour {
 		if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) {                  
 
 			if (currentObj == null) {
-				startOpenAnim (card[0]);
+				int touchIndex = getTouchedCard (getTouchPos());
+				if (touchIndex >= 0) {
+					
+					scaleSpeedX = (lastScaleX - card[touchIndex].transform.localScale.x) / (duringTime / Time.fixedDeltaTime);
+					scaleSpeedY = (lastScaleY - card[touchIndex].transform.localScale.y) / (duringTime / Time.fixedDeltaTime);
+					moveSpeedX = (lastPosX - card[touchIndex].transform.position.x) / (duringTime / Time.fixedDeltaTime);
+					moveSpeedY = (lastPosY - card[touchIndex].transform.position.y) / (duringTime / Time.fixedDeltaTime);
+
+					card [touchIndex].GetComponent<SpriteRenderer> ().sortingOrder = 1;
+
+					startOpenAnim (card [touchIndex]);
+				}
 			} else {
 				startCloseAnim ();
 			}
@@ -148,6 +157,20 @@ public class AskMainLogicScript : MonoBehaviour {
 		}
 
 		return Camera.main.ScreenToWorldPoint(pos);
+	}
+
+	//获取被点中的卡片
+	private int getTouchedCard(Vector2 pos) {
+
+		for (int i=0; i<card.Length; ++i) {
+
+			Vector2 cardPos = card [i].transform.position;
+
+			if (Mathf.Abs (pos.x - cardPos.x) <= cardWidth / 2 && Mathf.Abs (pos.y - cardPos.y) <= cardHeight / 2) {
+				return i;
+			}
+		}
+		return -1;
 	}
   
 	//添加文本到卡片
