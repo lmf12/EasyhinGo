@@ -22,8 +22,6 @@ public class BalloonScript : MonoBehaviour {
 
 		Vector2 pos = transform.position;
 
-		print (pos);
-
 		if (isUp) {
 
 			if (pos.y <= maxY) {
