@@ -4,41 +4,63 @@ using System.Collections;
 public class AskMainLogicScript : MonoBehaviour {
 
 	//参数设置
-	float duringTime = 2.0f;
-	float scaleSpeedX;
-	float scaleSpeedY;
-	float lastScaleX = 2.0f;
-	float lastScaleY = 2.0f;
+	private float duringTime = 1.5f;
+	private float scaleSpeedX;
+	private float scaleSpeedY;
+	private float lastScaleX = 2.0f;
+	private float lastScaleY = 2.0f;
 
+	//外部
 	public Texture2D textureBack;
 	public Texture2D textureFore;
+	public GameObject cardPerfab;
 
+	//控制
 	private GameObject currentObj;
+	private bool isStartOpenAnim;
+	private bool isStartCloseAnim;
 
-	private bool isStartAnim;
+	private float originScaleX;
+	private float originScaleY;
+
+	//数据
+	private GameObject card;
 
 	void Start () {
 
-		isStartAnim = false;
+		isStartOpenAnim = false;
+		isStartCloseAnim = false;
 
-		GameObject card = GameObject.Find ("card_back");
+		card = createCard (new Vector2(0, 0));
+
 		scaleSpeedX = (lastScaleX - card.transform.localScale.x) / (duringTime / Time.fixedDeltaTime);
 		scaleSpeedY = (lastScaleY - card.transform.localScale.y) / (duringTime / Time.fixedDeltaTime);
 	}
 		
 	void FixedUpdate () {
 
-		if (isStartAnim) {
+		if (isStartOpenAnim) {
 			
 			changeTexture (currentObj, currentObj.transform.transform.localScale.x < 0 ? textureBack : textureFore);
 
 			if (currentObj.transform.localScale.x + scaleSpeedX >= lastScaleX) {
 				currentObj.transform.localScale = new Vector2 (lastScaleX, lastScaleY);
-				finishAnim ();
+				isStartOpenAnim = false;
 			} else {
 				currentObj.transform.localScale = new Vector2 (currentObj.transform.localScale.x + scaleSpeedX, currentObj.transform.localScale.y + scaleSpeedY);
 			}
 
+		} else if (isStartCloseAnim) {
+
+			changeTexture (currentObj, currentObj.transform.transform.localScale.x < 0 ? textureBack : textureFore);
+
+			if (currentObj.transform.localScale.x - scaleSpeedX <= originScaleX) {
+				currentObj.transform.localScale = new Vector2 (originScaleX, originScaleY);
+				isStartCloseAnim = false;
+				currentObj = null;
+			} else {
+				currentObj.transform.localScale = new Vector2 (currentObj.transform.localScale.x - scaleSpeedX, currentObj.transform.localScale.y - scaleSpeedY);
+			}
 		}
 	}
 
@@ -46,8 +68,18 @@ public class AskMainLogicScript : MonoBehaviour {
 
 		if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) {                  
 
-			startAnim (GameObject.Find("card_back"));
+			if (currentObj == null) {
+				startOpenAnim (card);
+			} else {
+				startCloseAnim ();
+			}
 		} 
+	}
+
+	//创建一个卡片
+	private GameObject createCard(Vector2 pos) {
+
+		return (GameObject)Instantiate (cardPerfab, pos, Quaternion.identity);
 	}
 
 	// 替换精灵的图片
@@ -59,16 +91,17 @@ public class AskMainLogicScript : MonoBehaviour {
 	}
 
 	//动画函数
-	private void startAnim(GameObject obj) {
+	private void startOpenAnim(GameObject obj) {
 
 		currentObj = obj;
-		isStartAnim = true;
+		originScaleX = currentObj.transform.localScale.x;
+		originScaleY = currentObj.transform.localScale.y;
+		isStartOpenAnim = true;
 	}
 
-	private void finishAnim() {
+	private void startCloseAnim() {
 
-		currentObj = null;
-		isStartAnim = false;
+		isStartCloseAnim = true;
 	}
 
 	//获取点击位置
@@ -86,5 +119,10 @@ public class AskMainLogicScript : MonoBehaviour {
 
 		return Camera.main.ScreenToWorldPoint(pos);
 	}
- 
+  
+	//添加文本到卡片
+	private void addTextToCard(string text, GameObject obj) {
+
+
+	}
 }
