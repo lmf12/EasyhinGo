@@ -6,27 +6,75 @@ public class ArrowMainLogicScript : MonoBehaviour {
 	public GameObject ropePrefab;
 
 	private GameObject rope1;
+	private GameObject rope2;
+	private GameObject rope3;
 	private GameObject balloon1;
 	private GameObject object1;
+	private GameObject balloon2;
+	private GameObject object2;
+	private GameObject balloon3;
+	private GameObject object3;
+
+	private int score;
 
 	// Use this for initialization
 	void Start () {
 
+		score = 0;
+
 		balloon1 = GameObject.Find ("balloon_1");
 		object1 = GameObject.Find ("object_1");
+		balloon2 = GameObject.Find ("balloon_2");
+		object2 = GameObject.Find ("object_2");
+		balloon3 = GameObject.Find ("balloon_3");
+		object3 = GameObject.Find ("object_3");
 
 		if (object1.GetComponent<DistanceJoint2D> () != null) {
 			rope1 = this.drawLine (rope1, this.localToWorld (balloon1, object1.GetComponent<DistanceJoint2D> ().connectedAnchor), this.localToWorld (object1, object1.GetComponent<DistanceJoint2D> ().anchor));
+		}
+
+		if (object2.GetComponent<DistanceJoint2D> () != null) {
+			rope2 = this.drawLine (rope2, this.localToWorld (balloon2, object2.GetComponent<DistanceJoint2D> ().connectedAnchor), this.localToWorld (object2, object2.GetComponent<DistanceJoint2D> ().anchor));
+		}
+
+		if (object3.GetComponent<DistanceJoint2D> () != null) {
+			rope3 = this.drawLine (rope3, this.localToWorld (balloon3, object3.GetComponent<DistanceJoint2D> ().connectedAnchor), this.localToWorld (object3, object3.GetComponent<DistanceJoint2D> ().anchor));
 		}
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
 	
-		if (object1.GetComponent<DistanceJoint2D> () != null) {
+		if (object1 != null && object1.GetComponent<DistanceJoint2D> () != null) {
 			rope1 = this.drawLine (rope1, this.localToWorld (balloon1, object1.GetComponent<DistanceJoint2D> ().connectedAnchor), this.localToWorld (object1, object1.GetComponent<DistanceJoint2D> ().anchor));
 		} else {
-			Destroy (rope1);
+			if (rope1 != null) {
+				Destroy (rope1);
+				rope1 = null;
+			}
+		}
+
+		if (object2 != null && object2.GetComponent<DistanceJoint2D> () != null) {
+			rope2 = this.drawLine (rope2, this.localToWorld (balloon2, object2.GetComponent<DistanceJoint2D> ().connectedAnchor), this.localToWorld (object2, object2.GetComponent<DistanceJoint2D> ().anchor));
+		} else {
+			if (rope2 != null) {
+				Destroy (rope2);
+				rope2 = null;
+			}
+		}
+
+		if (object3 != null && object3.GetComponent<DistanceJoint2D> () != null) {
+			rope3 = this.drawLine (rope3, this.localToWorld (balloon3, object3.GetComponent<DistanceJoint2D> ().connectedAnchor), this.localToWorld (object3, object3.GetComponent<DistanceJoint2D> ().anchor));
+		} else {
+			if (rope3 != null) {
+				Destroy (rope3);
+				rope3 = null;
+			}
+		}
+
+		if (score >= 3) {
+
+			Application.LoadLevel (1);
 		}
 	}
 
@@ -74,5 +122,12 @@ public class ArrowMainLogicScript : MonoBehaviour {
 	private Vector2 localToWorld(GameObject obj, Vector2 pos) {
 
 		return obj.transform.localToWorldMatrix.MultiplyPoint (pos);
+	}
+
+	public void addScore(GameObject obj) {
+
+		this.score += 1;
+
+		Destroy (obj);
 	}
 }

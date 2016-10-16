@@ -7,10 +7,12 @@ public class BalloonScript : MonoBehaviour {
 
 	private float g = 9.8f; //重力
 
-	private float maxY = 3.0f;
-	private float minY = -1.0f;
-	private float moveSpeed = 0.03f;
-	private bool isUp = true;
+	public float maxY;
+	public float minY;
+	public bool isUp;
+
+	public float upForce;
+	public float downForce;
 
 	// Use this for initialization
 	void Start () {
@@ -25,7 +27,7 @@ public class BalloonScript : MonoBehaviour {
 		if (isUp) {
 
 			if (pos.y <= maxY) {
-				GetComponent<Rigidbody2D> ().AddForce (new Vector2 (0, 2.2f * g));
+				GetComponent<Rigidbody2D> ().AddForce (new Vector2 (0, upForce * g));
 			} else {
 				GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
 				isUp = false;
@@ -34,7 +36,7 @@ public class BalloonScript : MonoBehaviour {
 		} else {
 			
 			if (pos.y >= minY) {
-				GetComponent<Rigidbody2D> ().AddForce (new Vector2 (0, 1.8f * g));
+				GetComponent<Rigidbody2D> ().AddForce (new Vector2 (0, downForce * g));
 			} else {
 				GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
 				isUp = true;

@@ -103,7 +103,11 @@ public class BalloonObjectScript : MonoBehaviour {
 
 		//完成动画
 		if (transform.position.y == targetLoc.y && transform.localScale.x == 2 && this.GetComponent<SpriteRenderer> ().color.a == 1) {
-			Application.LoadLevel (1);
+
+			isPlaying = false;
+
+			GameObject.Find ("MainLogic").GetComponent<ArrowMainLogicScript>().addScore(gameObject);
+
 		}
 
 
