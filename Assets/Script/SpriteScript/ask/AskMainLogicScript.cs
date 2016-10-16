@@ -4,11 +4,17 @@ using System.Collections;
 public class AskMainLogicScript : MonoBehaviour {
 
 	//参数设置
-	private float duringTime = 1.5f;
+	private float duringTime = 1f;
 	private float scaleSpeedX;
 	private float scaleSpeedY;
 	private float lastScaleX = 2.0f;
 	private float lastScaleY = 2.0f;
+	private float cardWidth = 1.3f;
+	private float cardHeight = 1.8f;
+	private float group1originX = -6f;
+	private float group1originY = 1f;
+	private float group2originX = 3f;
+	private float group2originY = 1f;
 
 	//外部
 	public Texture2D textureBack;
@@ -24,17 +30,25 @@ public class AskMainLogicScript : MonoBehaviour {
 	private float originScaleY;
 
 	//数据
-	private GameObject card;
+	private GameObject[] card;
 
 	void Start () {
 
 		isStartOpenAnim = false;
 		isStartCloseAnim = false;
 
-		card = createCard (new Vector2(0, 0));
+		card = new GameObject[18];
 
-		scaleSpeedX = (lastScaleX - card.transform.localScale.x) / (duringTime / Time.fixedDeltaTime);
-		scaleSpeedY = (lastScaleY - card.transform.localScale.y) / (duringTime / Time.fixedDeltaTime);
+		for (int i = 0; i < 9; ++i) {
+			card[i] = createCard (new Vector2(group1originX + cardWidth * (i % 3), group1originY - cardHeight * (i / 3)));
+		}
+
+		for (int i = 0; i < 9; ++i) {
+			card[i+9] = createCard (new Vector2(group2originX + cardWidth * (i % 3), group2originY - cardHeight * (i / 3)));
+		}
+
+		scaleSpeedX = (lastScaleX - card[0].transform.localScale.x) / (duringTime / Time.fixedDeltaTime);
+		scaleSpeedY = (lastScaleY - card[0].transform.localScale.y) / (duringTime / Time.fixedDeltaTime);
 	}
 		
 	void FixedUpdate () {
@@ -69,7 +83,7 @@ public class AskMainLogicScript : MonoBehaviour {
 		if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) {                  
 
 			if (currentObj == null) {
-				startOpenAnim (card);
+				startOpenAnim (card[0]);
 			} else {
 				startCloseAnim ();
 			}
