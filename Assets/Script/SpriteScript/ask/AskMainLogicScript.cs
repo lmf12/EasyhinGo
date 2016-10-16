@@ -9,6 +9,11 @@ public class AskMainLogicScript : MonoBehaviour {
 	private float scaleSpeedY;
 	private float lastScaleX = 2.0f;
 	private float lastScaleY = 2.0f;
+	private float moveSpeedX;
+	private float moveSpeedY;
+	private float lastPosX = 0;
+	private float lastPosY = 0;
+
 	private float cardWidth = 1.3f;
 	private float cardHeight = 1.8f;
 	private float group1originX = -6f;
@@ -28,6 +33,8 @@ public class AskMainLogicScript : MonoBehaviour {
 
 	private float originScaleX;
 	private float originScaleY;
+	private float originPosX;
+	private float originPosY;
 
 	//数据
 	private GameObject[] card;
@@ -49,6 +56,8 @@ public class AskMainLogicScript : MonoBehaviour {
 
 		scaleSpeedX = (lastScaleX - card[0].transform.localScale.x) / (duringTime / Time.fixedDeltaTime);
 		scaleSpeedY = (lastScaleY - card[0].transform.localScale.y) / (duringTime / Time.fixedDeltaTime);
+		moveSpeedX = (lastPosX - card[0].transform.position.x) / (duringTime / Time.fixedDeltaTime);
+		moveSpeedY = (lastPosY - card[0].transform.position.y) / (duringTime / Time.fixedDeltaTime);
 	}
 		
 	void FixedUpdate () {
@@ -59,9 +68,11 @@ public class AskMainLogicScript : MonoBehaviour {
 
 			if (currentObj.transform.localScale.x + scaleSpeedX >= lastScaleX) {
 				currentObj.transform.localScale = new Vector2 (lastScaleX, lastScaleY);
+				currentObj.transform.position = new Vector2 (lastPosX, lastPosY);
 				isStartOpenAnim = false;
 			} else {
 				currentObj.transform.localScale = new Vector2 (currentObj.transform.localScale.x + scaleSpeedX, currentObj.transform.localScale.y + scaleSpeedY);
+				currentObj.transform.position = new Vector2 (currentObj.transform.position.x + moveSpeedX, currentObj.transform.position.y + moveSpeedY);
 			}
 
 		} else if (isStartCloseAnim) {
@@ -70,10 +81,12 @@ public class AskMainLogicScript : MonoBehaviour {
 
 			if (currentObj.transform.localScale.x - scaleSpeedX <= originScaleX) {
 				currentObj.transform.localScale = new Vector2 (originScaleX, originScaleY);
+				currentObj.transform.position = new Vector2 (originPosX, originPosY);
 				isStartCloseAnim = false;
 				currentObj = null;
 			} else {
 				currentObj.transform.localScale = new Vector2 (currentObj.transform.localScale.x - scaleSpeedX, currentObj.transform.localScale.y - scaleSpeedY);
+				currentObj.transform.position = new Vector2 (currentObj.transform.position.x - moveSpeedX, currentObj.transform.position.y - moveSpeedY);
 			}
 		}
 	}
@@ -110,6 +123,9 @@ public class AskMainLogicScript : MonoBehaviour {
 		currentObj = obj;
 		originScaleX = currentObj.transform.localScale.x;
 		originScaleY = currentObj.transform.localScale.y;
+		originPosX = currentObj.transform.position.x;
+		originPosY = currentObj.transform.position.y;
+
 		isStartOpenAnim = true;
 	}
 
