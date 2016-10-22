@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class AskMainLogicScript : MonoBehaviour {
 
@@ -25,9 +26,10 @@ public class AskMainLogicScript : MonoBehaviour {
 	public Texture2D textureBack;
 	public Texture2D textureFore;
 	public GameObject cardPerfab;
+	public Text textPerfab;
 
 	//控制
-	private GameObject currentObj;
+	private int currentIndex;
 	private bool isStartOpenAnim;
 	private bool isStartCloseAnim;
 
@@ -38,20 +40,25 @@ public class AskMainLogicScript : MonoBehaviour {
 
 	//数据
 	private GameObject[] card;
+	private Text[] textList;
 
 	void Start () {
 
 		isStartOpenAnim = false;
 		isStartCloseAnim = false;
+		currentIndex = -1;
 
 		card = new GameObject[18];
+		textList = new Text[18];
 
 		for (int i = 0; i < 9; ++i) {
 			card[i] = createCard (new Vector2(group1originX + cardWidth * (i % 3), group1originY - cardHeight * (i / 3)));
+			addTextToCard ("werwerewrewrewrewrwerewrewrwerwewerwerewrewrewrewrwerewrewrwerwe"+i, card[i], i);
 		}
 
 		for (int i = 0; i < 9; ++i) {
 			card[i+9] = createCard (new Vector2(group2originX + cardWidth * (i % 3), group2originY - cardHeight * (i / 3)));
+			addTextToCard ("werwerewrewrewrewrwerewrewrwerwewerwerewrewrewrewrwerewrewrwerwe"+(i+9), card[i+9], i+9);
 		}
 
 	}
@@ -60,40 +67,42 @@ public class AskMainLogicScript : MonoBehaviour {
 
 		if (isStartOpenAnim) {
 			
-			changeTexture (currentObj, currentObj.transform.transform.localScale.x < 0 ? textureBack : textureFore);
+			changeTexture (card[currentIndex], card[currentIndex].transform.transform.localScale.x < 0 ? textureBack : textureFore);
 
-			if (currentObj.transform.localScale.x + scaleSpeedX >= lastScaleX) {
-				currentObj.transform.localScale = new Vector2 (lastScaleX, lastScaleY);
-				currentObj.transform.position = new Vector2 (lastPosX, lastPosY);
+			if (card[currentIndex].transform.localScale.x + scaleSpeedX >= lastScaleX) {
+				card[currentIndex].transform.localScale = new Vector2 (lastScaleX, lastScaleY);
+				card[currentIndex].transform.position = new Vector2 (lastPosX, lastPosY);
 				isStartOpenAnim = false;
 			} else {
-				currentObj.transform.localScale = new Vector2 (currentObj.transform.localScale.x + scaleSpeedX, currentObj.transform.localScale.y + scaleSpeedY);
-				currentObj.transform.position = new Vector2 (currentObj.transform.position.x + moveSpeedX, currentObj.transform.position.y + moveSpeedY);
+				card[currentIndex].transform.localScale = new Vector2 (card[currentIndex].transform.localScale.x + scaleSpeedX, card[currentIndex].transform.localScale.y + scaleSpeedY);
+				card[currentIndex].transform.position = new Vector2 (card[currentIndex].transform.position.x + moveSpeedX, card[currentIndex].transform.position.y + moveSpeedY);
 			}
 
 		} else if (isStartCloseAnim) {
 
-			changeTexture (currentObj, currentObj.transform.transform.localScale.x < 0 ? textureBack : textureFore);
+			changeTexture (card[currentIndex], card[currentIndex].transform.transform.localScale.x < 0 ? textureBack : textureFore);
 
-			if (currentObj.transform.localScale.x - scaleSpeedX <= originScaleX) {
-				currentObj.transform.localScale = new Vector2 (originScaleX, originScaleY);
-				currentObj.transform.position = new Vector2 (originPosX, originPosY);
+			if (card[currentIndex].transform.localScale.x - scaleSpeedX <= originScaleX) {
+				card[currentIndex].transform.localScale = new Vector2 (originScaleX, originScaleY);
+				card[currentIndex].transform.position = new Vector2 (originPosX, originPosY);
 				isStartCloseAnim = false;
 
-				currentObj.GetComponent<SpriteRenderer> ().sortingOrder = 0;
-				currentObj = null;
+				card[currentIndex].GetComponent<SpriteRenderer> ().sortingOrder = 0;
+				currentIndex = -1;
 			} else {
-				currentObj.transform.localScale = new Vector2 (currentObj.transform.localScale.x - scaleSpeedX, currentObj.transform.localScale.y - scaleSpeedY);
-				currentObj.transform.position = new Vector2 (currentObj.transform.position.x - moveSpeedX, currentObj.transform.position.y - moveSpeedY);
+				card[currentIndex].transform.localScale = new Vector2 (card[currentIndex].transform.localScale.x - scaleSpeedX, card[currentIndex].transform.localScale.y - scaleSpeedY);
+				card[currentIndex].transform.position = new Vector2 (card[currentIndex].transform.position.x - moveSpeedX, card[currentIndex].transform.position.y - moveSpeedY);
 			}
 		}
+
+		updateCurrentText ();
 	}
 
 	void Update() {
 
 		if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) {                  
 
-			if (currentObj == null) {
+			if (currentIndex == -1) {
 				int touchIndex = getTouchedCard (getTouchPos());
 				if (touchIndex >= 0) {
 					
@@ -104,7 +113,7 @@ public class AskMainLogicScript : MonoBehaviour {
 
 					card [touchIndex].GetComponent<SpriteRenderer> ().sortingOrder = 1;
 
-					startOpenAnim (card [touchIndex]);
+					startOpenAnim (touchIndex);
 				}
 			} else {
 				if (!isStartOpenAnim) {
@@ -129,13 +138,13 @@ public class AskMainLogicScript : MonoBehaviour {
 	}
 
 	//动画函数
-	private void startOpenAnim(GameObject obj) {
+	private void startOpenAnim(int index) {
 
-		currentObj = obj;
-		originScaleX = currentObj.transform.localScale.x;
-		originScaleY = currentObj.transform.localScale.y;
-		originPosX = currentObj.transform.position.x;
-		originPosY = currentObj.transform.position.y;
+		currentIndex = index;
+		originScaleX = card[currentIndex].transform.localScale.x;
+		originScaleY = card[currentIndex].transform.localScale.y;
+		originPosX = card[currentIndex].transform.position.x;
+		originPosY = card[currentIndex].transform.position.y;
 
 		isStartOpenAnim = true;
 	}
@@ -176,8 +185,25 @@ public class AskMainLogicScript : MonoBehaviour {
 	}
   
 	//添加文本到卡片
-	private void addTextToCard(string text, GameObject obj) {
+	private void addTextToCard(string text, GameObject obj, int index) {
 
+		textList [index] = Instantiate (textPerfab);
+		textList [index].text = text;
+		textList [index].color = Color.red;
+		textList [index].transform.position = Camera.main.WorldToScreenPoint (obj.transform.position);
+		textList [index].transform.SetParent (GameObject.Find("Canvas").transform);
+		textList [index].enabled = false;
+	}
 
+	private void updateCurrentText() {
+		
+		if (currentIndex == -1) {
+			return;
+		}
+
+		Text text = textList [currentIndex];
+		text.enabled = text.transform.localScale.x >= 0;
+		text.transform.position = Camera.main.WorldToScreenPoint (card [currentIndex].transform.position);
+		text.transform.localScale = card [currentIndex].transform.localScale;
 	}
 }
