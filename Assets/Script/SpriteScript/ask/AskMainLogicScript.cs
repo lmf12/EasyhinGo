@@ -4,6 +4,53 @@ using UnityEngine.UI;
 
 public class AskMainLogicScript : MonoBehaviour {
 
+	//文本内容
+	private string[] questions = {
+		"问题1",
+		"问题2",
+		"问题3",
+		"问题4",
+		"问题5",
+		"问题6",
+		"问题7",
+		"问题8",
+		"问题9",
+		"问题10",
+		"问题11",
+		"问题12",
+		"问题13",
+		"问题14",
+		"问题15",
+		"问题16",
+		"问题17",
+		"问题18",
+		"问题19",
+		"问题20"
+	};
+
+	private string[] answers = {
+		"答案1",
+		"答案2",
+		"答案3",
+		"答案4",
+		"答案5",
+		"答案6",
+		"答案7",
+		"答案8",
+		"答案9",
+		"答案10",
+		"答案11",
+		"答案12",
+		"答案13",
+		"答案14",
+		"答案15",
+		"答案16",
+		"答案17",
+		"答案18",
+		"答案19",
+		"答案20"
+	};
+
 	//参数设置
 	private float duringTime = 1f;
 	private float scaleSpeedX;
@@ -42,6 +89,12 @@ public class AskMainLogicScript : MonoBehaviour {
 	private GameObject[] card;
 	private Text[] textList;
 
+	private string[] questionList;
+	private string[] answerList;
+
+	private int[] questionMappingList;
+	private int[] answerMappingList;
+
 	void Start () {
 
 		isStartOpenAnim = false;
@@ -50,15 +103,19 @@ public class AskMainLogicScript : MonoBehaviour {
 
 		card = new GameObject[18];
 		textList = new Text[18];
+		questionMappingList = new int[18];
+		answerMappingList = new int[18];
+
+		resortQuestionAndAnswerList ();
 
 		for (int i = 0; i < 9; ++i) {
 			card[i] = createCard (new Vector2(group1originX + cardWidth * (i % 3), group1originY - cardHeight * (i / 3)));
-			addTextToCard ("werwerewrewrewrewrwerewrewrwerwewerwerewrewrewrewrwerewrewrwerwe"+i, card[i], i);
+			addTextToCard (getRandomQuestion(i), card[i], i);
 		}
 
 		for (int i = 0; i < 9; ++i) {
 			card[i+9] = createCard (new Vector2(group2originX + cardWidth * (i % 3), group2originY - cardHeight * (i / 3)));
-			addTextToCard ("werwerewrewrewrewrwerewrewrwerwewerwerewrewrewrewrwerewrewrwerwe"+(i+9), card[i+9], i+9);
+			addTextToCard (getRandomAnswer(i), card[i+9], i+9);
 		}
 
 	}
@@ -206,4 +263,77 @@ public class AskMainLogicScript : MonoBehaviour {
 		text.transform.position = Camera.main.WorldToScreenPoint (card [currentIndex].transform.position);
 		text.transform.localScale = card [currentIndex].transform.localScale;
 	}
+
+	//重排问题
+	private void resortQuestionAndAnswerList() {
+
+		int index = questions.Length - 1;
+
+		while (index >= 1) {
+
+			int targetIndex = (int)(Random.value * index);
+			targetIndex = targetIndex == index ? targetIndex-1 : targetIndex;
+
+			string temp = questions [targetIndex];
+			questions [targetIndex] = questions [index];
+			questions [index] = temp;
+
+			temp = answers [targetIndex];
+			answers [targetIndex] = answers [index];
+			answers [index] = temp;
+
+			index--;
+		}
+
+		questionList = new string[questions.Length];
+		questions.CopyTo (questionList, 0);
+
+		answerList = new string[answers.Length];
+		answers.CopyTo (answerList, 0);
+	}
+
+	//获取问题
+	private string getRandomQuestion(int index) {
+
+		int count = card.Length - index;
+		int targetIndex = (int)(Random.value * count);
+		targetIndex = targetIndex == count ? targetIndex - 1 : targetIndex;
+
+		string value = questionList[index + targetIndex];
+		questionList [targetIndex] = questionList [index];
+
+		int realIndex = 0;
+		for (int i = 0; i < questions.Length; ++i) {
+			if (value == questions [i]) {
+				realIndex = i;
+				break;
+			}
+		}
+		questionMappingList [index] = realIndex;
+
+		return value;
+	}
+
+	//获取答案
+	private string getRandomAnswer(int index) {
+
+		int count = card.Length - index;
+		int targetIndex = (int)(Random.value * count);
+		targetIndex = targetIndex == count ? targetIndex - 1 : targetIndex;
+
+		string value = answerList[index + targetIndex];
+		answerList [targetIndex] = answerList [index];
+
+		int realIndex = 0;
+		for (int i = 0; i < answers.Length; ++i) {
+			if (value == answers [i]) {
+				realIndex = i;
+				break;
+			}
+		}
+		answerMappingList [index] = realIndex;
+
+		return value;
+	}
+		
 }
