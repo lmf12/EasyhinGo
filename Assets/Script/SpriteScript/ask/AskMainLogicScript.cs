@@ -156,6 +156,11 @@ public class AskMainLogicScript : MonoBehaviour {
 						destoryCard (lastIndex);
 						destoryCard (currentIndex);
 
+						//退出游戏
+						if (checkIfSuccess ()) {
+							Application.LoadLevel (1);
+						}
+
 					} else {
 
 						closeCard (lastIndex);
@@ -341,12 +346,12 @@ public class AskMainLogicScript : MonoBehaviour {
 	//获取问题
 	private string getRandomQuestion(int index) {
 
-		int count = card.Length - index;
+		int count = 9 - index;
 		int targetIndex = (int)(Random.value * count);
 		targetIndex = targetIndex == count ? targetIndex - 1 : targetIndex;
 
 		string value = questionList[index + targetIndex];
-		questionList [targetIndex] = questionList [index];
+		questionList [index + targetIndex] = questionList [index];
 
 		int realIndex = 0;
 		for (int i = 0; i < questions.Length; ++i) {
@@ -363,12 +368,12 @@ public class AskMainLogicScript : MonoBehaviour {
 	//获取答案
 	private string getRandomAnswer(int index) {
 
-		int count = card.Length - index;
+		int count = 9 - index;
 		int targetIndex = (int)(Random.value * count);
 		targetIndex = targetIndex == count ? targetIndex - 1 : targetIndex;
 
 		string value = answerList[index + targetIndex];
-		answerList [targetIndex] = answerList [index];
+		answerList [index + targetIndex] = answerList [index];
 
 		int realIndex = 0;
 		for (int i = 0; i < answers.Length; ++i) {
@@ -404,5 +409,18 @@ public class AskMainLogicScript : MonoBehaviour {
 
 		card [index] = null;
 		textList [index] = null;
+	}
+
+	//检查是否成功
+	private bool checkIfSuccess() {
+
+		for (int i = 0; i < card.Length; ++i) {
+
+			if (card [i] != null) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 }
