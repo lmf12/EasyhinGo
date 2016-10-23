@@ -77,6 +77,7 @@ public class AskMainLogicScript : MonoBehaviour {
 
 	//控制
 	private int currentIndex;
+	private int lastIndex;
 	private bool isStartOpenAnim;
 	private bool isStartCloseAnim;
 
@@ -100,6 +101,7 @@ public class AskMainLogicScript : MonoBehaviour {
 		isStartOpenAnim = false;
 		isStartCloseAnim = false;
 		currentIndex = -1;
+		lastIndex = -1;
 
 		card = new GameObject[18];
 		textList = new Text[18];
@@ -145,7 +147,28 @@ public class AskMainLogicScript : MonoBehaviour {
 				isStartCloseAnim = false;
 
 				card[currentIndex].GetComponent<SpriteRenderer> ().sortingOrder = 0;
-				currentIndex = -1;
+
+				if (lastIndex >= 0) { //如果已经有一张翻开
+
+					if ((lastIndex <= 8 && (questionMappingList [lastIndex] == answerMappingList [currentIndex - 9]))
+					    || (lastIndex >= 9 && (questionMappingList [currentIndex]) == answerMappingList [lastIndex - 9])) {  //成功配对
+
+						destoryCard (lastIndex);
+						destoryCard (currentIndex);
+
+					} else {
+
+						closeCard (lastIndex);
+						closeCard (currentIndex);
+					}
+					lastIndex = -1;
+					currentIndex = -1;
+				} else {
+
+					lastIndex = currentIndex;
+					currentIndex = -1;
+				}
+
 			} else {
 				card[currentIndex].transform.localScale = new Vector2 (card[currentIndex].transform.localScale.x - scaleSpeedX, card[currentIndex].transform.localScale.y - scaleSpeedY);
 				card[currentIndex].transform.position = new Vector2 (card[currentIndex].transform.position.x - moveSpeedX, card[currentIndex].transform.position.y - moveSpeedY);
@@ -170,7 +193,23 @@ public class AskMainLogicScript : MonoBehaviour {
 
 					card [touchIndex].GetComponent<SpriteRenderer> ().sortingOrder = 1;
 
-					startOpenAnim (touchIndex);
+					if (!(lastIndex >= 0 && lastIndex == touchIndex) && card[touchIndex] != null) {  //如果重复点击则无效，卡片已经销毁无效
+
+						if (lastIndex >= 0 && lastIndex <= 8) {  //上一张是问题
+							
+							if (touchIndex >= 0 && touchIndex <= 8) {
+								closeCard (lastIndex);
+								lastIndex = -1;
+							}
+						} else if (lastIndex >= 9 && lastIndex <= 17) {  //上一张是答案
+
+							if (touchIndex >= 9 && touchIndex <= 17) {
+								closeCard (lastIndex);
+								lastIndex = -1;
+							}
+						}
+						startOpenAnim (touchIndex);
+					}
 				}
 			} else {
 				if (!isStartOpenAnim) {
@@ -235,6 +274,10 @@ public class AskMainLogicScript : MonoBehaviour {
 
 		for (int i=0; i<card.Length; ++i) {
 
+			if (card [i] == null) {
+				continue;
+			}
+
 			Vector2 cardPos = card [i].transform.position;
 
 			if (Mathf.Abs (pos.x - cardPos.x) <= cardWidth / 2 && Mathf.Abs (pos.y - cardPos.y) <= cardHeight / 2) {
@@ -262,9 +305,9 @@ public class AskMainLogicScript : MonoBehaviour {
 		}
 
 		Text text = textList [currentIndex];
-		text.enabled = text.transform.localScale.x >= 0;
 		text.transform.position = Camera.main.WorldToScreenPoint (card [currentIndex].transform.position);
 		text.transform.localScale = card [currentIndex].transform.localScale;
+		text.enabled = text.transform.localScale.x >= 0;
 	}
 
 	//重排问题
@@ -338,5 +381,28 @@ public class AskMainLogicScript : MonoBehaviour {
 
 		return value;
 	}
-		
+
+	//关闭卡片
+	private void closeCard(int index) {
+
+		Vector2 scale = card [index].transform.localScale;
+		scale.x = -Mathf.Abs (scale.x);
+		card [index].transform.localScale = scale;
+		changeTexture (card[index], card[index].transform.transform.localScale.x < 0 ? textureBack : textureFore);
+
+		Text text = textList [index];
+		text.transform.position = Camera.main.WorldToScreenPoint (card [index].transform.position);
+		text.transform.localScale = card [index].transform.localScale;
+		text.enabled = text.transform.localScale.x >= 0;
+	}
+
+	//  销毁卡片
+	private void destoryCard(int index) {
+
+		Destroy (card[index]);
+		Destroy (textList[index]);
+
+		card [index] = null;
+		textList [index] = null;
+	}
 }
