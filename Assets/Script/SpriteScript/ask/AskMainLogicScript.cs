@@ -64,9 +64,9 @@ public class AskMainLogicScript : MonoBehaviour {
 
 	private float cardWidth = 1.3f;
 	private float cardHeight = 1.8f;
-	private float group1originX = -6f;
+	private float group1originX = -6.5f;
 	private float group1originY = 1f;
-	private float group2originX = 3f;
+	private float group2originX = 4f;
 	private float group2originY = 1f;
 
 	//外部
@@ -174,6 +174,9 @@ public class AskMainLogicScript : MonoBehaviour {
 				}
 			} else {
 				if (!isStartOpenAnim) {
+
+					scaleSpeedX = (lastScaleX - originScaleX) / (duringTime / Time.fixedDeltaTime);
+
 					startCloseAnim ();
 				}
 			}
@@ -198,7 +201,7 @@ public class AskMainLogicScript : MonoBehaviour {
 	private void startOpenAnim(int index) {
 
 		currentIndex = index;
-		originScaleX = card[currentIndex].transform.localScale.x;
+		originScaleX = -card[currentIndex].transform.localScale.x;
 		originScaleY = card[currentIndex].transform.localScale.y;
 		originPosX = card[currentIndex].transform.position.x;
 		originPosY = card[currentIndex].transform.position.y;
