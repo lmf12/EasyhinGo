@@ -297,7 +297,7 @@ public class AskMainLogicScript : MonoBehaviour {
 
 		textList [index] = Instantiate (textPerfab);
 		textList [index].text = text;
-		textList [index].color = Color.red;
+		textList [index].color = new Color (103.0f/255, 83.0f/255, 51.0f/255);
 		textList [index].transform.position = Camera.main.WorldToScreenPoint (obj.transform.position);
 		textList [index].transform.SetParent (GameObject.Find("Canvas").transform);
 		textList [index].enabled = false;
