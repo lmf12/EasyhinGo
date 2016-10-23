@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class StarScript : MonoBehaviour {
 
+	private CameraScript soundScript;
+
 	public Text score;
 	public Text win;
 	private bool isGet = false;
@@ -13,6 +15,8 @@ public class StarScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		// 获取摄像机的组件
+		soundScript = Camera.main.GetComponent<CameraScript>();
 	}
 
 	// Update is called once per frame
@@ -44,6 +48,7 @@ public class StarScript : MonoBehaviour {
 		}
 
 		isGet = true;
+		soundScript.PlaySound (0, false, 1);
 
 		score.text = "" + (int.Parse (score.text) + 1);
 
