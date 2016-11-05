@@ -12,19 +12,22 @@ public class JigsawLastBrick : MonoBehaviour {
 	private float scaleSpeed;
 	private float thinSpead;
 
+	private float originScale;
 
 	private bool isExpanding = true;  //正在变大
 	private bool isThining = true;    //正在变淡
 	private bool isPlaying = false;  //是否播放动画
 
-	Vector2 targetLoc = new Vector2(2.7f, -2.7f);
+	Vector2 targetLoc = new Vector2(2.6f, -3.6f);
 
 	// Use this for initialization
 	void Start () {
 	
+		originScale = transform.localScale.x;
+
 		moveSpeedX = (targetLoc.x - transform.position.x) / (duration / Time.fixedDeltaTime);
 		moveSpeedY = (targetLoc.y - transform.position.y) / (duration / Time.fixedDeltaTime);
-		scaleSpeed = (maxScale - transform.localScale.x) / (duration / 2 / Time.fixedDeltaTime);
+		scaleSpeed = (maxScale - originScale) / (duration / 2 / Time.fixedDeltaTime);
 		thinSpead = (this.GetComponent<SpriteRenderer> ().color.a - minThin) / (duration / 2 / Time.fixedDeltaTime);
 	}
 	
@@ -64,9 +67,9 @@ public class JigsawLastBrick : MonoBehaviour {
 			}
 		} else {  //缩小
 
-			if (Mathf.Abs (1 - transform.localScale.x) <= scaleSpeed) {
+			if (Mathf.Abs (originScale - transform.localScale.x) <= scaleSpeed) {
 
-				transform.localScale = new Vector2 (1, 1);
+				transform.localScale = new Vector2 (originScale, originScale);
 			} else {
 
 				transform.localScale = new Vector2 (transform.localScale.x - scaleSpeed, transform.localScale.y - scaleSpeed);
@@ -102,7 +105,7 @@ public class JigsawLastBrick : MonoBehaviour {
 		}
 
 		//完成动画
-		if (transform.position.x == targetLoc.x && transform.position.y == targetLoc.y && transform.localScale.x == 1 && this.GetComponent<SpriteRenderer> ().color.a == 1) {
+		if (transform.position.x == targetLoc.x && transform.position.y == targetLoc.y && transform.localScale.x == originScale && this.GetComponent<SpriteRenderer> ().color.a == 1) {
 			Application.LoadLevel (1);
 		}
 			
@@ -111,5 +114,10 @@ public class JigsawLastBrick : MonoBehaviour {
 	public void startAnimation() {
 
 		this.isPlaying = true;
+	}
+
+	public bool isFinish() {
+
+		return isPlaying;
 	}
 }

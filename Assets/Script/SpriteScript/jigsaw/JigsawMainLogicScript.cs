@@ -3,7 +3,7 @@ using System.Collections;
 
 public class JigsawMainLogicScript : MonoBehaviour {
 
-	private float brickWidth = 2.7f;
+	private float brickWidth = 2.6f;
 	private ArrayList map = new ArrayList(new string[9]);  // 保存地图信息
 
 	// Use this for initialization
@@ -39,7 +39,7 @@ public class JigsawMainLogicScript : MonoBehaviour {
 	private Vector2 getPostionWithIndex(int index) {
 
 		float x = ((index % 3) - 1) * brickWidth;
-		float y = - ((index / 3) - 1) * brickWidth;
+		float y = - ((index / 3) - 1) * brickWidth - 1;
 
 		return new Vector2 (x, y);
 	}

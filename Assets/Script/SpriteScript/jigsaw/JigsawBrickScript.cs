@@ -13,6 +13,13 @@ public class JigsawBrickScript : MonoBehaviour {
 	void Update () {
 	
 		if (Input.touchCount > 0) {
+
+			GameObject lastBrick = GameObject.Find("jigsaw_img_1_09");
+			if (lastBrick.GetComponent<JigsawLastBrick> ().isFinish ()) {
+
+				return;
+			}
+
 			if (Input.GetTouch (0).phase == TouchPhase.Began) {
 
 				GameObject mainLogic = GameObject.Find("MainLogic");
