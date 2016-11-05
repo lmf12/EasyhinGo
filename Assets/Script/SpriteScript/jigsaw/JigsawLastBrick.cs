@@ -106,7 +106,8 @@ public class JigsawLastBrick : MonoBehaviour {
 
 		//完成动画
 		if (transform.position.x == targetLoc.x && transform.position.y == targetLoc.y && transform.localScale.x == originScale && this.GetComponent<SpriteRenderer> ().color.a == 1) {
-			Application.LoadLevel (1);
+			GameObject mainLogic = GameObject.Find("MainLogic");
+			mainLogic.GetComponent<JigsawMainLogicScript> ().showSuccessImage ();
 		}
 			
 	}

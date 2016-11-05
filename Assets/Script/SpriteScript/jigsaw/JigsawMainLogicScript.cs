@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class JigsawMainLogicScript : MonoBehaviour {
+
+	public Image success;
 
 	private float brickWidth = 2.6f;
 	private ArrayList map = new ArrayList(new string[9]);  // 保存地图信息
@@ -188,6 +191,18 @@ public class JigsawMainLogicScript : MonoBehaviour {
 
 			brick.GetComponent<JigsawLastBrick> ().startAnimation ();
 		}
+	}
+
+
+
+	public void goContinue() {
+
+		Application.LoadLevel (1);
+	}
+
+	public void showSuccessImage() {
+
+		success.rectTransform.localScale = new Vector2 (1, 1);
 	}
 }
 
