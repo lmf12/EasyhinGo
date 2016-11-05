@@ -15,7 +15,7 @@ public class LightScript : MonoBehaviour {
 
 	private bool canShowSetButton = false;
 
-	private float spaceY = 0.5f;
+	private float spaceY = 0.2f;
 
 	private Vector2 startLoc;
 
@@ -61,7 +61,7 @@ public class LightScript : MonoBehaviour {
 
 	public void setFloor() {
 
-		Instantiate (floorPrefab, new Vector2(transform.position.x, transform.position.y - 2*spaceY), Quaternion.identity);
+		Instantiate (floorPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
 	}
 
 	public void reset () {
@@ -76,6 +76,11 @@ public class LightScript : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
+
+		if (!following && !other.gameObject.name.Equals ("marry")) {
+
+			return;
+		}
 
 		if (marry == null) {
 			startMoving = true;
