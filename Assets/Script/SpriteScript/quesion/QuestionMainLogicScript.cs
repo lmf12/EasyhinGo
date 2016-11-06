@@ -13,8 +13,15 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	public GameObject textureSong;
 
 	public Button btnSure;
+	public Button btnQuestionSure;
 	public Image choosePanel;
+	public Image questionPanel;
 	public Sprite textureSureNormal;
+
+	public Toggle toggle1;
+	public Toggle toggle2;
+	public Toggle toggle3;
+	public Toggle toggle4;
 
 	private float cardWidth = 2.2f;
 	private float cardHeight = 2.2f;
@@ -25,12 +32,14 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	private GameObject[] card;
 
 	private bool isChoose;
+	private bool isSelectAnswer;
 
 	// Use this for initialization
 	void Start () {
 
 		card = new GameObject[9];
 		isChoose = false;
+		isSelectAnswer = false;
 	
 		for (int i = 0; i < 9; ++i) {
 			card[i] = createCard (new Vector2(group1originX + cardWidth * (i % 3), group1originY - cardHeight * (i / 3)));
@@ -42,6 +51,21 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+		if (choosePanel.transform.localScale.x == 0 && (Input.touchCount > 0 || Input.GetMouseButtonDown (0))) {                  
+
+			if (Input.touchCount > 0 && Input.GetTouch (0).phase != TouchPhase.Began) {
+				return;
+			}
+
+			if (questionPanel.transform.localScale.x == 0) {
+
+				int touchIndex = getTouchedCard (getTouchPos ());
+				if (touchIndex >= 0) {
+
+					showQuestionPanel ();
+				}
+			} 
+		}
 	}
 
 	//创建一个卡片
@@ -58,6 +82,56 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		spr.sprite = sp;  
 	}
 
+	private void showQuestionPanel() {
+
+		questionPanel.transform.localScale = new Vector2 (1, 1);
+	}
+
+	private void hideQuestionPanel() {
+
+		toggle1.isOn = false;
+		toggle2.isOn = false;
+		toggle3.isOn = false;
+		toggle4.isOn = false;
+		questionPanel.transform.localScale = new Vector2 (0, 0);
+	}
+
+	//获取被点中的卡片
+	private int getTouchedCard(Vector2 pos) {
+
+		for (int i=0; i<card.Length; ++i) {
+
+			if (card [i] == null) {
+				continue;
+			}
+
+			Vector2 cardPos = card [i].transform.position;
+
+			if (Mathf.Abs (pos.x - cardPos.x) <= cardWidth / 2 && Mathf.Abs (pos.y - cardPos.y) <= cardHeight / 2) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	//获取点击位置
+	private Vector2 getTouchPos() {
+
+		Vector2 pos = new Vector2 ();
+
+		if (Input.touchCount > 0) {
+			pos = Input.GetTouch (0).position;
+		} else if (Input.GetMouseButtonDown (0)) {
+			pos = Input.mousePosition;
+		} else {
+			pos = new Vector2 (0, 0);
+		}
+
+		return Camera.main.ScreenToWorldPoint(pos);
+	}
+
+
+	//选人面板
 	private void hideAllPeople() {
 
 		textureRocy.transform.localScale = new Vector2 (0, 0);
@@ -105,6 +179,22 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		if (isChoose) {
 
 			choosePanel.transform.localScale = new Vector2 (0, 0);
+		}
+	}
+		
+	//问题面板
+	public void toggleSelect() {
+
+		isSelectAnswer = true;
+		btnQuestionSure.GetComponent<Image> ().sprite = textureSureNormal;
+	}
+
+
+	public void btnQuestionSureClick() {
+
+		if (isSelectAnswer) {
+
+			hideQuestionPanel ();
 		}
 	}
 }
