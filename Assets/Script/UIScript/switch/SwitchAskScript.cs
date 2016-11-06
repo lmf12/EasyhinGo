@@ -22,6 +22,6 @@ public class SwitchAskScript : MonoBehaviour,IPointerDownHandler,IPointerUpHandl
 	// 当按钮抬起的时候自动调用此方法  
 	public void OnPointerUp (PointerEventData eventData) {
 
-		Application.LoadLevel (6);
+		Application.LoadLevel (7);
 	} 
 }
