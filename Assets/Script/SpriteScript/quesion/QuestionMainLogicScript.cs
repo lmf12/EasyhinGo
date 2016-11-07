@@ -18,6 +18,21 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	public Image questionPanel;
 	public Sprite textureSureNormal;
 
+	public Button btnRay;
+	public Button btnMono;
+	public Button btnSong;
+	public Button btnRoc;
+
+	public Sprite btnRay1;
+	public Sprite btnMono1;
+	public Sprite btnSong1;
+	public Sprite btnRoc1;
+
+	public Sprite btnRay2;
+	public Sprite btnMono2;
+	public Sprite btnSong2;
+	public Sprite btnRoc2;
+
 	public Toggle toggle1;
 	public Toggle toggle2;
 	public Toggle toggle3;
@@ -138,6 +153,11 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		textureMono.transform.localScale = new Vector2 (0, 0);
 		textureRay.transform.localScale = new Vector2 (0, 0);
 		textureSong.transform.localScale = new Vector2 (0, 0);
+
+		btnRay.GetComponent<Image> ().sprite = btnRay2;
+		btnMono.GetComponent<Image> ().sprite = btnMono2;
+		btnSong.GetComponent<Image> ().sprite = btnSong2;
+		btnRoc.GetComponent<Image> ().sprite = btnRoc2;
 	}
 
 	private void hasChoose() {
@@ -151,6 +171,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		hasChoose ();
 		hideAllPeople ();
 		textureRocy.transform.localScale = new Vector2 (1, 1);
+		btnRoc.GetComponent<Image> ().sprite = btnRoc1;
 	}
 
 	public void chooseMono() {
@@ -158,6 +179,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		hasChoose ();
 		hideAllPeople ();
 		textureMono.transform.localScale = new Vector2 (1, 1);
+		btnMono.GetComponent<Image> ().sprite = btnMono1;
 	}
 
 	public void chooseRay() {
@@ -165,6 +187,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		hasChoose ();
 		hideAllPeople ();
 		textureRay.transform.localScale = new Vector2 (1, 1);
+		btnRay.GetComponent<Image> ().sprite = btnRay1;
 	}
 
 	public void chooseSong() {
@@ -172,6 +195,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		hasChoose ();
 		hideAllPeople ();
 		textureSong.transform.localScale = new Vector2 (1, 1);
+		btnSong.GetComponent<Image> ().sprite = btnSong1;
 	}
 
 	public void btnSureClick() {
