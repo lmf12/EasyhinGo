@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class StratMainLogic : MonoBehaviour {
 
 	private WWWHelper wwwHelper;
-	public Text title;
+//	public Text title;
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +22,6 @@ public class StratMainLogic : MonoBehaviour {
 
 	void RequestDone (string result) {
 
-		title.text = result;
+//		title.text = result;
 	}
 }
