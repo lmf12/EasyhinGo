@@ -6,9 +6,9 @@ public class StarScript : MonoBehaviour {
 
 	private CameraScript soundScript;
 
-	public Text win;
 
 	public Sprite money;
+	public Image win;
 
 	public Image score1;
 	public Image score2;
@@ -38,11 +38,8 @@ public class StarScript : MonoBehaviour {
 		}
 			
 		if (isWin) {
-			win.transform.Translate (new Vector2 (0, -2f));
 
-			if (win.transform.position.y <= Screen.height / 2) {
-				Application.LoadLevel (1);
-			}
+			win.transform.localScale = new Vector2 (1, 1);
 		}
 			
 	}
@@ -64,6 +61,12 @@ public class StarScript : MonoBehaviour {
 
 			isWin = true;
 		}
+	}
+
+	public void goBack() {
+
+		Application.LoadLevel (1);
+
 	}
 
 	private void updateScoreView() {
