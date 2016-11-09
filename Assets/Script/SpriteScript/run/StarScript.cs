@@ -6,10 +6,16 @@ public class StarScript : MonoBehaviour {
 
 	private CameraScript soundScript;
 
-	public Text score;
 	public Text win;
-	private bool isGet = false;
 
+	public Sprite money;
+
+	public Image score1;
+	public Image score2;
+	public Image score3;
+	public Image score4;
+
+	private bool isGet = false;
 	private bool isWin = false;
 
 	// Use this for initialization
@@ -50,12 +56,40 @@ public class StarScript : MonoBehaviour {
 		isGet = true;
 		soundScript.PlaySound (0, false, 1);
 
-		score.text = "" + (int.Parse (score.text) + 1);
+		GameObject.Find ("marry").GetComponent<MarryScript> ().addScore ();
 
-		if (int.Parse (score.text) == 5) {
+		updateScoreView ();
+
+		if (GameObject.Find ("marry").GetComponent<MarryScript> ().getScore() == 4) {
 
 			isWin = true;
 		}
 	}
 
+	private void updateScoreView() {
+
+		int currentScore = GameObject.Find ("marry").GetComponent<MarryScript> ().getScore ();
+
+		if (currentScore > 0) {
+			
+			score1.sprite = money;
+
+			if (currentScore > 1) {
+				
+				score2.sprite = money;
+
+				if (currentScore > 2) {
+
+					score3.sprite = money;
+
+					if (currentScore > 3) {
+
+						score4.sprite = money;
+
+					}
+				}
+			}
+		}
+
+	}
 }

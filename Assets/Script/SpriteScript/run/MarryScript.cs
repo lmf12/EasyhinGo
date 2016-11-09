@@ -11,6 +11,8 @@ public class MarryScript : MonoBehaviour {
 	private bool isGround = true;
 	private float jumpVelocity = 5.0f;
 
+	private int score = 0;
+
 	// Use this for initialization
 	void Start () {
 
@@ -168,5 +170,15 @@ public class MarryScript : MonoBehaviour {
 	void OnCollisionExit2D(Collision2D coll) {
 
 		isGround = false;
+	}
+
+	public void addScore() {
+
+		score += 1;
+	}
+
+	public int getScore() {
+
+		return score;
 	}
 }
