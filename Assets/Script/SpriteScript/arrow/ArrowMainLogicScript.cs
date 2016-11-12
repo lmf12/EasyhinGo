@@ -8,12 +8,15 @@ public class ArrowMainLogicScript : MonoBehaviour {
 	private GameObject rope1;
 	private GameObject rope2;
 	private GameObject rope3;
+	private GameObject rope4;
 	private GameObject balloon1;
 	private GameObject object1;
 	private GameObject balloon2;
 	private GameObject object2;
 	private GameObject balloon3;
 	private GameObject object3;
+	private GameObject balloon4;
+	private GameObject object4;
 
 	private int score;
 
@@ -28,6 +31,8 @@ public class ArrowMainLogicScript : MonoBehaviour {
 		object2 = GameObject.Find ("object_2");
 		balloon3 = GameObject.Find ("balloon_3");
 		object3 = GameObject.Find ("object_3");
+		balloon4 = GameObject.Find ("balloon_4");
+		object4 = GameObject.Find ("object_4");
 
 		if (object1.GetComponent<DistanceJoint2D> () != null) {
 			rope1 = this.drawLine (rope1, this.localToWorld (balloon1, object1.GetComponent<DistanceJoint2D> ().connectedAnchor), this.localToWorld (object1, object1.GetComponent<DistanceJoint2D> ().anchor));
@@ -39,6 +44,10 @@ public class ArrowMainLogicScript : MonoBehaviour {
 
 		if (object3.GetComponent<DistanceJoint2D> () != null) {
 			rope3 = this.drawLine (rope3, this.localToWorld (balloon3, object3.GetComponent<DistanceJoint2D> ().connectedAnchor), this.localToWorld (object3, object3.GetComponent<DistanceJoint2D> ().anchor));
+		}
+
+		if (object4.GetComponent<DistanceJoint2D> () != null) {
+			rope4 = this.drawLine (rope4, this.localToWorld (balloon4, object4.GetComponent<DistanceJoint2D> ().connectedAnchor), this.localToWorld (object4, object4.GetComponent<DistanceJoint2D> ().anchor));
 		}
 	}
 	
@@ -72,7 +81,16 @@ public class ArrowMainLogicScript : MonoBehaviour {
 			}
 		}
 
-		if (score >= 3) {
+		if (object4 != null && object4.GetComponent<DistanceJoint2D> () != null) {
+			rope4 = this.drawLine (rope4, this.localToWorld (balloon4, object4.GetComponent<DistanceJoint2D> ().connectedAnchor), this.localToWorld (object4, object4.GetComponent<DistanceJoint2D> ().anchor));
+		} else {
+			if (rope3 != null) {
+				Destroy (rope4);
+				rope4 = null;
+			}
+		}
+
+		if (score >= 4) {
 
 			Application.LoadLevel (1);
 		}
