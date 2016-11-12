@@ -9,6 +9,7 @@ public class StarScript : MonoBehaviour {
 
 	public Sprite money;
 	public Image win;
+	public Text scoreText;
 
 	public Image score1;
 	public Image score2;
@@ -39,7 +40,9 @@ public class StarScript : MonoBehaviour {
 			
 		if (isWin) {
 
+			scoreText.text = GameObject.Find ("RunMainLogic").GetComponent<RunMainLogicScript> ().getTimeString ();
 			win.transform.localScale = new Vector2 (1, 1);
+			GameObject.Find ("RunMainLogic").GetComponent<RunMainLogicScript> ().setGameEnd ();
 		}
 			
 	}
