@@ -11,6 +11,8 @@ public class BowScript : MonoBehaviour {
 
 	private bool canShoot;
 
+	public GameObject bow2;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -37,6 +39,10 @@ public class BowScript : MonoBehaviour {
 
 				if (this.isPosInObj (this.gameObject, touchPos)) {
 					isTouchBegin = true;
+
+					transform.localScale = new Vector2 (0, 0);
+					bow2.transform.localScale = new Vector2 (1, 1);
+
 					if (currentArrow != null) {
 						Destroy (currentArrow);
 					}
@@ -49,6 +55,9 @@ public class BowScript : MonoBehaviour {
 				isTouchBegin = false;
 				currentArrow.GetComponent<ArrowScript> ().beginShoot (this.getVelocity(currentArrow, 15));
 				canShoot = false;
+
+				transform.localScale = new Vector2 (1, 1);
+				bow2.transform.localScale = new Vector2 (0, 0);
 			}
 		}
 
@@ -70,6 +79,8 @@ public class BowScript : MonoBehaviour {
 				this.rotation (currentArrow, -this.getSin (touchPos.x - objPos.x, touchPos.y - objPos.y) - Mathf.PI / 2);
 			}
 		}
+
+		updateBow2 ();
 	}
 
 	//获取速度
@@ -117,5 +128,10 @@ public class BowScript : MonoBehaviour {
 	private float getSin(float x, float y) {
 
 		return y / Mathf.Sqrt (x * x + y * y);
+	}
+
+	private void updateBow2() {
+
+		bow2.transform.localRotation = transform.localRotation;
 	}
 }
