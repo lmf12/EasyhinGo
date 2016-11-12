@@ -1,7 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class SwitchMainLogic : MonoBehaviour {
+
+	public Button button1;
+	public Button button2;
+	public Button button3;
+	public Button button4;
+	public Button button5;
+
+	public GameObject loc1;
+	public GameObject loc2;
+	public GameObject loc3;
+	public GameObject loc4;
+	public GameObject loc5;
 
 	public GameObject background1;
 	public GameObject background2;
@@ -95,12 +108,19 @@ public class SwitchMainLogic : MonoBehaviour {
 			}
 		}
 
+
+	}
+
+	void Update() {
+
 		updateBackground2Pos ();
 		updateBackground3Pos ();
 		updateBackground4Pos ();
 
 		updateStone ();
 		updateBoat ();
+
+		updateButtonLoc ();
 	}
 
 	private void updateBackground2Pos() {
@@ -190,5 +210,14 @@ public class SwitchMainLogic : MonoBehaviour {
 			posBoat.y = endY;
 			boat.transform.position = posBoat;
 		}
+	}
+
+	private void updateButtonLoc() {
+
+		button1.transform.position = Camera.main.WorldToScreenPoint (loc1.transform.position);
+		button2.transform.position = Camera.main.WorldToScreenPoint (loc2.transform.position);
+		button3.transform.position = Camera.main.WorldToScreenPoint (loc3.transform.position);
+		button4.transform.position = Camera.main.WorldToScreenPoint (loc4.transform.position);
+		button5.transform.position = Camera.main.WorldToScreenPoint (loc5.transform.position);
 	}
 }
