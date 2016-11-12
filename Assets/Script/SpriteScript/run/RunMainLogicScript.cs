@@ -15,7 +15,7 @@ public class RunMainLogicScript : MonoBehaviour {
 	
 		totalTime = 0;
 
-		InvokeRepeating("timeCount", 0, 1);
+		InvokeRepeating("timeCount", 1, 1);
 
 		isGameEnd = false;
 	}

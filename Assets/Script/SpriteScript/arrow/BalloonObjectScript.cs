@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class BalloonObjectScript : MonoBehaviour {
 
@@ -14,6 +15,9 @@ public class BalloonObjectScript : MonoBehaviour {
 	private float moveSpeedY;
 	private float scaleSpeed;
 	private float thinSpead;
+
+	public Image icon;
+	public Sprite yellowIcon;
 
 	Vector2 targetLoc = new Vector2(0, 0);
 
@@ -44,71 +48,12 @@ public class BalloonObjectScript : MonoBehaviour {
 			return;
 		}
 
-		//移动Y
-		if (Mathf.Abs (targetLoc.y - transform.position.y) <= moveSpeedY) {
-			Vector2 pos = transform.position;
-			pos.y = targetLoc.y;
-			transform.position = pos;
-		} else {
-			transform.Translate (new Vector2(0, moveSpeedY));
-		}
 
-		if (isExpanding) {  //扩大
-			if (Mathf.Abs (maxScale - transform.localScale.x) <= scaleSpeed) {
+		isPlaying = false;
 
-				transform.localScale = new Vector2 (maxScale, maxScale);
-				isExpanding = false;
-			} else {
+		GameObject.Find ("MainLogic").GetComponent<ArrowMainLogicScript>().addScore(gameObject);
 
-				transform.localScale = new Vector2 (transform.localScale.x + scaleSpeed, transform.localScale.y + scaleSpeed);
-			}
-		} else {  //缩小
-
-			if (Mathf.Abs (2 - transform.localScale.x) <= scaleSpeed) {
-
-				transform.localScale = new Vector2 (2, 2);
-			} else {
-
-				transform.localScale = new Vector2 (transform.localScale.x - scaleSpeed, transform.localScale.y - scaleSpeed);
-			}
-		}
-
-		if (isThining) {  //变淡
-			if (Mathf.Abs (minThin - this.GetComponent<SpriteRenderer> ().color.a) <= thinSpead) {
-
-				Color c = this.GetComponent<SpriteRenderer> ().color; 
-				c.a = minThin; 
-				this.GetComponent<SpriteRenderer> ().color = c;
-
-				isThining = false;
-			} else {
-
-				Color c = this.GetComponent<SpriteRenderer> ().color; 
-				c.a -= thinSpead; 
-				this.GetComponent<SpriteRenderer> ().color = c;
-			}
-		} else {   //变深
-			if (Mathf.Abs (1 - this.GetComponent<SpriteRenderer> ().color.a) <= thinSpead) {
-
-				Color c = this.GetComponent<SpriteRenderer> ().color; 
-				c.a = 1; 
-				this.GetComponent<SpriteRenderer> ().color = c;
-			} else {
-
-				Color c = this.GetComponent<SpriteRenderer> ().color; 
-				c.a += thinSpead; 
-				this.GetComponent<SpriteRenderer> ().color = c;
-			}
-		}
-
-		//完成动画
-		if (transform.position.y == targetLoc.y && transform.localScale.x == 2 && this.GetComponent<SpriteRenderer> ().color.a == 1) {
-
-			isPlaying = false;
-
-			GameObject.Find ("MainLogic").GetComponent<ArrowMainLogicScript>().addScore(gameObject);
-
-		}
+		icon.sprite = yellowIcon;
 
 
 	}

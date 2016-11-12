@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ArrowMainLogicScript : MonoBehaviour {
 
@@ -20,8 +21,19 @@ public class ArrowMainLogicScript : MonoBehaviour {
 
 	private int score;
 
+	private bool isGameEnd;
+	private int totalTime;
+
+	public Text textTime;
+	public Image winBg;
+	public Text scoreText;
+
 	// Use this for initialization
 	void Start () {
+
+		totalTime = 0;
+		isGameEnd = false;
+		InvokeRepeating("timeCount", 1, 1);
 
 		score = 0;
 
@@ -84,13 +96,18 @@ public class ArrowMainLogicScript : MonoBehaviour {
 		if (object4 != null && object4.GetComponent<DistanceJoint2D> () != null) {
 			rope4 = this.drawLine (rope4, this.localToWorld (balloon4, object4.GetComponent<DistanceJoint2D> ().connectedAnchor), this.localToWorld (object4, object4.GetComponent<DistanceJoint2D> ().anchor));
 		} else {
-			if (rope3 != null) {
+			if (rope4 != null) {
 				Destroy (rope4);
 				rope4 = null;
 			}
 		}
 
 		if (score >= 4) {
+
+			isGameEnd = true;
+
+			scoreText.text = textTime.text;
+			winBg.transform.localScale = new Vector2 (1, 1);
 
 			Application.LoadLevel (1);
 		}
@@ -147,5 +164,35 @@ public class ArrowMainLogicScript : MonoBehaviour {
 		this.score += 1;
 
 		Destroy (obj);
+	}
+
+	//游戏计时
+	private void timeCount() {
+
+		if (isGameEnd) {
+
+			CancelInvoke ();
+			return;
+		}
+
+		totalTime += 1;
+		textTime.text = getTimeStringFromSecond();
+	}
+
+	private string getTimeStringFromSecond() {
+
+		string second = "" + (totalTime % 60);
+		string minute = "" + ((totalTime / 60) % 60);
+
+		second = (second.Length == 1 ? "0" : "") + second;
+		minute = (minute.Length == 1 ? "0" : "") + minute;
+
+		return minute + " : " + second;
+	}
+
+	public void goBack() {
+
+		Application.LoadLevel (1);
+
 	}
 }
