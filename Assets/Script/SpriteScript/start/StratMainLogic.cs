@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class StratMainLogic : MonoBehaviour {
 
 	public Image launch;
+	public Image rank;
 
 	private WWWHelper wwwHelper;
 
@@ -57,5 +58,15 @@ public class StratMainLogic : MonoBehaviour {
 	void hideLaunch() {
 
 		isPlaying = true;
+	}
+
+	public void openRank() {
+
+		rank.transform.localScale = new Vector2 (1, 1);
+	}
+
+	public void closeRank() {
+
+		rank.transform.localScale = new Vector2 (0, 0);
 	}
 }
