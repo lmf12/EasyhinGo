@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems; 
 using System.Collections;
 
-public class StartScript : MonoBehaviour,IPointerDownHandler,IPointerUpHandler {
+public class Story1NextButtonScript : MonoBehaviour,IPointerDownHandler,IPointerUpHandler {
 
 	// Use this for initialization
 	void Start () {
@@ -10,7 +10,7 @@ public class StartScript : MonoBehaviour,IPointerDownHandler,IPointerUpHandler {
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
 	
 	}
 
@@ -22,6 +22,6 @@ public class StartScript : MonoBehaviour,IPointerDownHandler,IPointerUpHandler {
 	// 当按钮抬起的时候自动调用此方法  
 	public void OnPointerUp (PointerEventData eventData) {
 
-		Application.LoadLevel (8);
+		Application.LoadLevel (2);
 	} 
 }
