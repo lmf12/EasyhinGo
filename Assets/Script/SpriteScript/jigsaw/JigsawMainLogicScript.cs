@@ -17,6 +17,8 @@ public class JigsawMainLogicScript : MonoBehaviour {
 
 	public Text winText;
 
+	public Image origin;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -246,6 +248,16 @@ public class JigsawMainLogicScript : MonoBehaviour {
 		minute = (minute.Length == 1 ? "0" : "") + minute;
 
 		return minute + " : " + second;
+	}
+
+	public void showOrigin() {
+
+		origin.transform.localScale = new Vector2 (1, 1);
+	}
+
+	public void hideOrigin() {
+
+		origin.transform.localScale = new Vector2 (0, 0);
 	}
 }
 
