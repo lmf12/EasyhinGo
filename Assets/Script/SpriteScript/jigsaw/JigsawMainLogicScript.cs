@@ -9,9 +9,21 @@ public class JigsawMainLogicScript : MonoBehaviour {
 	private float brickWidth = 2.6f;
 	private ArrayList map = new ArrayList(new string[9]);  // 保存地图信息
 
+	public Text textTime;
+
+	private int totalTime;
+
+	private bool isGameEnd;
+
+	public Text winText;
+
 	// Use this for initialization
 	void Start () {
 	
+		totalTime = 0;
+		isGameEnd = false;
+
+		InvokeRepeating("timeCount", 1, 1);
 		this.initLocation ();
 	}
 	
@@ -202,7 +214,38 @@ public class JigsawMainLogicScript : MonoBehaviour {
 
 	public void showSuccessImage() {
 
+		isGameEnd = true;
+
+		winText.text = textTime.text;
+
 		success.rectTransform.localScale = new Vector2 (1, 1);
+	}
+
+
+
+
+	//游戏计时
+	private void timeCount() {
+
+		if (isGameEnd) {
+
+			CancelInvoke ();
+			return;
+		}
+
+		totalTime += 1;
+		textTime.text = getTimeStringFromSecond();
+	}
+
+	private string getTimeStringFromSecond() {
+
+		string second = "" + (totalTime % 60);
+		string minute = "" + ((totalTime / 60) % 60);
+
+		second = (second.Length == 1 ? "0" : "") + second;
+		minute = (minute.Length == 1 ? "0" : "") + minute;
+
+		return minute + " : " + second;
 	}
 }
 
