@@ -67,6 +67,12 @@ public class FallMainLogicScript : MonoBehaviour {
 
 	public Text textPrefab;
 
+
+	//最后时间
+	private float countTime; 
+
+
+
 	// Use this for initialization
 	void Start () {
 	
@@ -85,6 +91,8 @@ public class FallMainLogicScript : MonoBehaviour {
 		isRocGet = false;
 
 		isBegin = false;
+
+		countTime = 0;
 	}
 	
 	// Update is called once per frame
@@ -140,6 +148,11 @@ public class FallMainLogicScript : MonoBehaviour {
 
 
 		if (isMonoGet && isRayGet && isSongGet && isRocGet) {
+
+			countTime += Time.fixedDeltaTime;
+		}
+
+		if (countTime >= 1) {
 
 			isGameEnd = true;
 			winText.text = textTime.text;
@@ -332,9 +345,14 @@ public class FallMainLogicScript : MonoBehaviour {
 	public void createText(string str) {
 
 		Vector2 pos = people.transform.position;
-		pos.y += 1;
+		pos.y += 1.2f;
 		Text text = (Text)Instantiate (textPrefab, Camera.main.WorldToScreenPoint(pos), Quaternion.identity);
 		text.text = str;
+		if (str.Equals ("+20s")) {
+			text.color = Color.red;
+		} else {
+			text.color = Color.white;
+		}
 		text.transform.SetParent (GameObject.Find("Canvas").transform);
 
 		Destroy (text, 1);
