@@ -64,6 +64,9 @@ public class FallMainLogicScript : MonoBehaviour {
 
 	private bool isBegin;
 
+
+	public Text textPrefab;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -324,5 +327,16 @@ public class FallMainLogicScript : MonoBehaviour {
 
 		isBegin = true;
 		guize.transform.localScale = new Vector2 (0, 0);
+	}
+
+	public void createText(string str) {
+
+		Vector2 pos = people.transform.position;
+		pos.y += 1;
+		Text text = (Text)Instantiate (textPrefab, Camera.main.WorldToScreenPoint(pos), Quaternion.identity);
+		text.text = str;
+		text.transform.SetParent (GameObject.Find("Canvas").transform);
+
+		Destroy (text, 1);
 	}
 }

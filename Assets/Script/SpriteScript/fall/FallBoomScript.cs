@@ -21,6 +21,8 @@ public class FallBoomScript : MonoBehaviour {
 
 		if (other.gameObject.name.Equals ("people_1")) {
 			mainLogic.GetComponent<FallMainLogicScript> ().getBoom ();
+
+			mainLogic.GetComponent<FallMainLogicScript> ().createText ("+20s");
 		}
 
 		Destroy(transform.GetComponent<Rigidbody2D> ());

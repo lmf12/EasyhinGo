@@ -28,6 +28,8 @@ public class FallHeadScript : MonoBehaviour {
 			} else if (gameObject.name.Equals ("SongPrefab(Clone)")) {
 				mainLogic.GetComponent<FallMainLogicScript> ().getSong ();
 			}
+
+			mainLogic.GetComponent<FallMainLogicScript> ().createText ("+20s");
 		}
 
 		Destroy(gameObject);
