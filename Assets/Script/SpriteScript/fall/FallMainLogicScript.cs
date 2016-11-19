@@ -4,7 +4,9 @@ using System.Collections;
 public class FallMainLogicScript : MonoBehaviour {
 
 	public GameObject people;
-	private float speed = 0.05f;
+	public GameObject boom;
+
+	private float speed = 0.06f;
 
 	private float minX = -6;
 	private float maxX = 6;
@@ -23,11 +25,18 @@ public class FallMainLogicScript : MonoBehaviour {
 
 		isLeftPress = false;
 		isRightPress = false;
+
+		createBoom (Random.Range(minX, maxX));
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
 	
+		if (GameObject.Find ("BoomPerfab(Clone)") == null) {
+
+			createBoom (Random.Range(minX, maxX));
+		}
+
 		if (isMoving) {
 
 			//边界判断
@@ -95,5 +104,10 @@ public class FallMainLogicScript : MonoBehaviour {
 		Vector2 scale = people.transform.localScale;
 		scale.x *= -1;
 		people.transform.localScale = scale;
+	}
+
+	private void createBoom(float x) {
+
+		GameObject fire = (GameObject)Instantiate (boom, new Vector2(x, 5), Quaternion.identity);
 	}
 }
