@@ -46,9 +46,9 @@ public class BalloonScript : MonoBehaviour {
 
 	}
 
-	void OnCollisionEnter2D(Collision2D coll) {
+	void OnTriggerStay2D(Collider2D other) {
 
-		if (coll.gameObject.name.Substring (0, 5).Equals ("Arrow")) {
+		if (other.gameObject.name.Substring (0, 5).Equals ("Arrow")) {
 
 			Destroy (obj.GetComponent<DistanceJoint2D>());
 			Destroy (gameObject);
@@ -56,7 +56,7 @@ public class BalloonScript : MonoBehaviour {
 
 	}
 
-	void OnCollisionExit2D(Collision2D coll) {
+	void OnTriggerExit2D(Collider2D other) {
 
 	}
 }
