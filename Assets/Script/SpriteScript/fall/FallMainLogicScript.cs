@@ -54,12 +54,15 @@ public class FallMainLogicScript : MonoBehaviour {
 
 	public Image win;
 
+	public Image guize;
+
 
 	private bool isMonoGet;
 	private bool isRayGet;
 	private bool isSongGet;
 	private bool isRocGet;
 
+	private bool isBegin;
 
 	// Use this for initialization
 	void Start () {
@@ -77,10 +80,17 @@ public class FallMainLogicScript : MonoBehaviour {
 		isRayGet = false;
 		isSongGet = false;
 		isRocGet = false;
+
+		isBegin = false;
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+
+		if (!isBegin) {
+
+			return;
+		}
 
 		if (isGameEnd) {
 
@@ -308,5 +318,11 @@ public class FallMainLogicScript : MonoBehaviour {
 
 		totalTime += 20;
 		textTime.text = getTimeStringFromSecond();
+	}
+
+	public void closeGuize() {
+
+		isBegin = true;
+		guize.transform.localScale = new Vector2 (0, 0);
 	}
 }
