@@ -44,19 +44,48 @@ public class FallMainLogicScript : MonoBehaviour {
 	public Sprite spRoc;
 
 
+	public Text textTime;
+
+	private int totalTime;
+
+	private bool isGameEnd;
+
+	public Text winText;
+
+	public Image win;
+
+
+	private bool isMonoGet;
+	private bool isRayGet;
+	private bool isSongGet;
+	private bool isRocGet;
+
 
 	// Use this for initialization
 	void Start () {
 	
+		InvokeRepeating("timeCount", 1, 1);
+
 		isMoving = false;
 		isRight = true;
 
 		isLeftPress = false;
 		isRightPress = false;
+
+
+		isMonoGet = false;
+		isRayGet = false;
+		isSongGet = false;
+		isRocGet = false;
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+
+		if (isGameEnd) {
+
+			return;
+		}
 
 		float flag = canCreate ();
 		if (flag > -8) {
@@ -94,6 +123,25 @@ public class FallMainLogicScript : MonoBehaviour {
 			}
 
 			people.transform.Translate (new Vector2 (speed, 0));
+		}
+
+
+		if (isMonoGet && isRayGet && isSongGet && isRocGet) {
+
+			isGameEnd = true;
+			winText.text = textTime.text;
+			win.transform.localScale = new Vector2 (1, 1);
+
+			destoryObj (currentObj1);
+			destoryObj (currentObj2);
+			destoryObj (currentObj3);
+			destoryObj (currentObj4);
+		}
+	}
+
+	private void destoryObj(GameObject obj) {
+		if (obj) {
+			Destroy (obj);
 		}
 	}
 
@@ -150,7 +198,7 @@ public class FallMainLogicScript : MonoBehaviour {
 
 	private GameObject createBoom(float x) {
 
-		return (GameObject)Instantiate (boom, new Vector2(x, 5), Quaternion.identity);
+		return (GameObject)Instantiate (boom, new Vector2(x, 5 + Random.value), Quaternion.identity);
 	}
 
 	private GameObject createHead(float x) {
@@ -160,26 +208,26 @@ public class FallMainLogicScript : MonoBehaviour {
 		switch (index) {
 		case 0:
 		case 1:
-			return (GameObject)Instantiate (ray, new Vector2(x, 5), Quaternion.identity);
+			return (GameObject)Instantiate (ray, new Vector2(x, 5.5f + Random.value), Quaternion.identity);
 			break;
 		case 2:
 			int i = (int)(Random.value * 2);
-			return (GameObject)Instantiate (i==0 ?song:mono, new Vector2(x, 5), Quaternion.identity);
+			return (GameObject)Instantiate (i==0 ?song:mono, new Vector2(x, 6 + Random.value), Quaternion.identity);
 			break;
 		case 3:
 		case 4:
 		case 5:
-			return (GameObject)Instantiate (mono, new Vector2(x, 5), Quaternion.identity);
+			return (GameObject)Instantiate (mono, new Vector2(x, 5.8f + Random.value), Quaternion.identity);
 			break;
 		default:
-			return (GameObject)Instantiate (roc, new Vector2(x, 5), Quaternion.identity);
+			return (GameObject)Instantiate (roc, new Vector2(x, 5 + Random.value), Quaternion.identity);
 			break;
 		}
 	}
 
 	private GameObject createObj(float x) {
 
-		int index = (int)(Random.value * 3);
+		int index = (int)(Random.value * 2);
 
 		if (index == 0) {
 			return createBoom (x);
@@ -207,23 +255,58 @@ public class FallMainLogicScript : MonoBehaviour {
 		}
 	}
 
+
+	//游戏计时
+	private void timeCount() {
+
+		if (isGameEnd) {
+
+			CancelInvoke ();
+			return;
+		}
+
+		totalTime += 1;
+		textTime.text = getTimeStringFromSecond();
+	}
+
+	private string getTimeStringFromSecond() {
+
+		string second = "" + (totalTime % 60);
+		string minute = "" + ((totalTime / 60) % 60);
+
+		second = (second.Length == 1 ? "0" : "") + second;
+		minute = (minute.Length == 1 ? "0" : "") + minute;
+
+		return minute + " : " + second;
+	}
+
 	public void getMono() {
 
+		isMonoGet = true;
 		imgMono.sprite = spMono;
 	}
 
 	public void getRoc() {
 
+		isRocGet = true;
 		imgRoc.sprite = spRoc;
 	}
 
 	public void getRay() {
 
+		isRayGet = true;
 		imgRay.sprite = spRay;
 	}
 
 	public void getSong() {
 
+		isSongGet = true;
 		imgSong.sprite = spSong;
+	}
+
+	public void getBoom() {
+
+		totalTime += 20;
+		textTime.text = getTimeStringFromSecond();
 	}
 }

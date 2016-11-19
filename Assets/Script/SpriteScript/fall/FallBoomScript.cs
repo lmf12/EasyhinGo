@@ -17,6 +17,12 @@ public class FallBoomScript : MonoBehaviour {
 
 	void OnTriggerStay2D(Collider2D other) {
 
+		GameObject mainLogic = GameObject.Find ("FallMainLogic");
+
+		if (other.gameObject.name.Equals ("people_1")) {
+			mainLogic.GetComponent<FallMainLogicScript> ().getBoom ();
+		}
+
 		Destroy(transform.GetComponent<Rigidbody2D> ());
 		GameObject fire = (GameObject)Instantiate (firePrefab, new Vector2(transform.position.x, transform.position.y-0.15f), Quaternion.identity);
 
