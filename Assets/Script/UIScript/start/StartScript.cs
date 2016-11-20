@@ -22,6 +22,12 @@ public class StartScript : MonoBehaviour,IPointerDownHandler,IPointerUpHandler {
 	// 当按钮抬起的时候自动调用此方法  
 	public void OnPointerUp (PointerEventData eventData) {
 
-		Application.LoadLevel (8);
+		//读取分数
+		string str = PlayerPrefs.GetString("isStoryPlay", "null");
+		if (!str.Equals ("null")) {
+			Application.LoadLevel (1);
+		} else {
+			Application.LoadLevel (8);
+		}
 	} 
 }

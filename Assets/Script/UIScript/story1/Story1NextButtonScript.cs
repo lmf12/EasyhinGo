@@ -23,5 +23,7 @@ public class Story1NextButtonScript : MonoBehaviour,IPointerDownHandler,IPointer
 	public void OnPointerUp (PointerEventData eventData) {
 
 		Application.LoadLevel (2);
+
+		PlayerPrefs.SetString ("isStoryPlay", "1");
 	} 
 }

@@ -158,6 +158,8 @@ public class FallMainLogicScript : MonoBehaviour {
 			winText.text = textTime.text;
 			win.transform.localScale = new Vector2 (1, 1);
 
+			saveScore ();
+
 			destoryObj (currentObj1);
 			destoryObj (currentObj2);
 			destoryObj (currentObj3);
@@ -356,5 +358,17 @@ public class FallMainLogicScript : MonoBehaviour {
 		text.transform.SetParent (GameObject.Find("Canvas").transform);
 
 		Destroy (text, 1);
+	}
+
+	private void saveScore() {
+		
+		string str = PlayerPrefs.GetString("score_0", "null");
+		if (str.Equals ("null")) {
+			PlayerPrefs.SetString ("score_0", "" + totalTime);
+		} else {
+			if (int.Parse (str) > totalTime) {
+				PlayerPrefs.SetString ("score_0", "" + totalTime);
+			}
+		}
 	}
 }

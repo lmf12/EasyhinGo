@@ -44,11 +44,18 @@ public class SwitchMainLogic : MonoBehaviour {
 	private float originLocX;
 	private float originMainX;
 
+
+	public Text scorePrefab;
+	private Text[] scoreList;
+
+
 	// Use this for initialization
 	void Start () {
 
 		originLocX = background1.transform.position.x;
 		originMainX = Camera.main.ScreenToWorldPoint (mainLoc.transform.position).x;
+
+		createScoreList();
 	}
 	
 	// Update is called once per frame
@@ -64,6 +71,8 @@ public class SwitchMainLogic : MonoBehaviour {
 		updateBoat ();
 
 		updateButtonLoc ();
+
+		updateScoreLoc ();
 	}
 
 	private void updateBackground1Pos() {
@@ -169,5 +178,46 @@ public class SwitchMainLogic : MonoBehaviour {
 		button3.transform.position = Camera.main.WorldToScreenPoint (loc3.transform.position);
 		button4.transform.position = Camera.main.WorldToScreenPoint (loc4.transform.position);
 		button5.transform.position = Camera.main.WorldToScreenPoint (loc5.transform.position);
+	}
+
+	private void createScoreList() {
+
+		scoreList = new Text[5];
+
+		for (int i = 0; i < 5; ++i) {
+
+			scoreList[i] = (Text)Instantiate (scorePrefab, new Vector2(-100, -100), Quaternion.identity);
+			scoreList[i].transform.SetParent (GameObject.Find("Canvas").transform);
+
+			scoreList [i].color = Color.red;
+
+			//读取分数
+			string str = PlayerPrefs.GetString("score_" + i, "null");
+			if (!str.Equals ("null")) {
+				scoreList [i].text = getTimeStringFromSecond(int.Parse(str));
+			} else {
+				scoreList [i].text = "";
+			}
+		}
+	}
+
+	private void updateScoreLoc() {
+
+		scoreList [0].transform.position = new Vector2 (button1.transform.position.x, button1.transform.position.y + 120);
+		scoreList [1].transform.position = new Vector2 (button2.transform.position.x, button2.transform.position.y + 120);
+		scoreList [2].transform.position = new Vector2 (button3.transform.position.x, button3.transform.position.y + 120);
+		scoreList [3].transform.position = new Vector2 (button4.transform.position.x, button4.transform.position.y + 120);
+		scoreList [4].transform.position = new Vector2 (button5.transform.position.x, button5.transform.position.y + 120);
+	}
+
+	private string getTimeStringFromSecond(int time) {
+
+		string second = "" + (time % 60);
+		string minute = "" + ((time / 60) % 60);
+
+		second = (second.Length == 1 ? "0" : "") + second;
+		minute = (minute.Length == 1 ? "0" : "") + minute;
+
+		return minute + " : " + second;
 	}
 }

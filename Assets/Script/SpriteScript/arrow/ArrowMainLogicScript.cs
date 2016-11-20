@@ -109,6 +109,8 @@ public class ArrowMainLogicScript : MonoBehaviour {
 			scoreText.text = textTime.text;
 			winBg.transform.localScale = new Vector2 (1, 1);
 
+			saveScore ();
+
 			Application.LoadLevel (1);
 		}
 	}
@@ -194,5 +196,17 @@ public class ArrowMainLogicScript : MonoBehaviour {
 
 		Application.LoadLevel (1);
 
+	}
+
+	private void saveScore() {
+
+		string str = PlayerPrefs.GetString("score_4", "null");
+		if (str.Equals ("null")) {
+			PlayerPrefs.SetString ("score_4", "" + totalTime);
+		} else {
+			if (int.Parse (str) > totalTime) {
+				PlayerPrefs.SetString ("score_4", "" + totalTime);
+			}
+		}
 	}
 }

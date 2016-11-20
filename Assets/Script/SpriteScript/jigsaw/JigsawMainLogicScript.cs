@@ -221,6 +221,8 @@ public class JigsawMainLogicScript : MonoBehaviour {
 		winText.text = textTime.text;
 
 		success.rectTransform.localScale = new Vector2 (1, 1);
+
+		saveScore ();
 	}
 
 
@@ -258,6 +260,18 @@ public class JigsawMainLogicScript : MonoBehaviour {
 	public void hideOrigin() {
 
 		origin.transform.localScale = new Vector2 (0, 0);
+	}
+
+	private void saveScore() {
+
+		string str = PlayerPrefs.GetString("score_2", "null");
+		if (str.Equals ("null")) {
+			PlayerPrefs.SetString ("score_2", "" + totalTime);
+		} else {
+			if (int.Parse (str) > totalTime) {
+				PlayerPrefs.SetString ("score_2", "" + totalTime);
+			}
+		}
 	}
 }
 

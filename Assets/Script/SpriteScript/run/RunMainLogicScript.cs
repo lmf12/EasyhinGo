@@ -56,6 +56,20 @@ public class RunMainLogicScript : MonoBehaviour {
 
 	public void setGameEnd() {
 
+		saveScore ();
+
 		isGameEnd = true;
+	}
+
+	private void saveScore() {
+
+		string str = PlayerPrefs.GetString("score_3", "null");
+		if (str.Equals ("null")) {
+			PlayerPrefs.SetString ("score_3", "" + totalTime);
+		} else {
+			if (int.Parse (str) > totalTime) {
+				PlayerPrefs.SetString ("score_3", "" + totalTime);
+			}
+		}
 	}
 }
