@@ -47,8 +47,28 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	private GameObject[] card;
 
 	private bool isChoose;
+	private int currentChooseRole;
 	private bool isSelectAnswer;
 
+
+	public Text textQuestion;
+	public Text textItem1;
+	public Text textItem2;
+	public Text textItem3;
+	public Text textItem4;
+
+
+	private string[] currentQuestionList;
+	private string[] currentAList;
+	private string[] currentBList;
+	private string[] currentCList;
+	private string[] currentDList;
+	private string[] currentRList;
+
+
+
+	//随机问题列表
+	private int[] randomQuestionList;
 
 	//研发
 	private string[] question1 = {
@@ -227,7 +247,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		"双子座",
 		"魏婷婷",
 		"3",
-		"2016年10月8日"
+		"2016年10月20日"
 	};
 	private string[] question4_B = {
 		"7:15",
@@ -235,7 +255,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		"双鱼座",
 		"谭李莉",
 		"4",
-		"2016年10月9日"
+		"2016年10月21日"
 	};
 	private string[] question4_C = {
 		"7:13",
@@ -243,7 +263,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		"狮子座",
 		"滕赢赢",
 		"5",
-		"2016年10月10日"
+		"2016年10月22日"
 	};
 	private string[] question4_D = {
 		"7:12",
@@ -251,7 +271,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		"天秤座",
 		"刘胜",
 		"6",
-		"2016年10月11日"
+		"2016年10月23日"
 	};
 	private string[] question4_R = {
 		"7:12",
@@ -259,7 +279,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		"天秤座",
 		"魏婷婷",
 		"3",
-		"2016年10月8日"
+		"2016年10月21日"
 	};
 
 
@@ -273,6 +293,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		card = new GameObject[9];
 		isChoose = false;
 		isSelectAnswer = false;
+
+		randomQuestionList = new int[9];
 	
 		for (int i = 0; i < 9; ++i) {
 			card[i] = createCard (new Vector2(group1originX + cardWidth * (i % 3), group1originY - cardHeight * (i / 3)));
@@ -293,9 +315,10 @@ public class QuestionMainLogicScript : MonoBehaviour {
 			if (questionPanel.transform.localScale.x == 0) {
 
 				int touchIndex = getTouchedCard (getTouchPos ());
+
 				if (touchIndex >= 0) {
 
-					showQuestionPanel ();
+					showQuestionPanel (touchIndex);
 				}
 			} 
 		}
@@ -315,7 +338,15 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		spr.sprite = sp;  
 	}
 
-	private void showQuestionPanel() {
+	private void showQuestionPanel(int index) {
+
+		int num = randomQuestionList [index];
+
+		textQuestion.text = num == -1 ? "" : currentQuestionList[num];
+		textItem1.text = num == -1 ? "" : currentAList[num];
+		textItem2.text = num == -1 ? "" : currentBList[num];
+		textItem3.text = num == -1 ? "" : currentCList[num];
+		textItem4.text = num == -1 ? "" : currentDList[num];
 
 		questionPanel.transform.localScale = new Vector2 (1, 1);
 	}
@@ -386,6 +417,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 
 	public void chooseRocy() {
 
+		currentChooseRole = 3;
 		hasChoose ();
 		hideAllPeople ();
 		textureRocy.transform.localScale = new Vector2 (1, 1);
@@ -394,6 +426,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 
 	public void chooseMono() {
 
+		currentChooseRole = 2;
 		hasChoose ();
 		hideAllPeople ();
 		textureMono.transform.localScale = new Vector2 (1, 1);
@@ -402,6 +435,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 
 	public void chooseRay() {
 
+		currentChooseRole = 1;
 		hasChoose ();
 		hideAllPeople ();
 		textureRay.transform.localScale = new Vector2 (1, 1);
@@ -410,6 +444,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 
 	public void chooseSong() {
 
+		currentChooseRole = 4;
 		hasChoose ();
 		hideAllPeople ();
 		textureSong.transform.localScale = new Vector2 (1, 1);
@@ -421,6 +456,44 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		if (isChoose) {
 
 			choosePanel.transform.localScale = new Vector2 (0, 0);
+			initRandomList ();
+
+			switch (currentChooseRole) {
+			case 1:
+				currentQuestionList = question1;
+				currentAList = question1_A;
+				currentBList = question1_B;
+				currentCList = question1_C;
+				currentDList = question1_D;
+				currentRList = question1_R;
+				break;
+			case 2:
+				currentQuestionList = question2;
+				currentAList = question2_A;
+				currentBList = question2_B;
+				currentCList = question2_C;
+				currentDList = question2_D;
+				currentRList = question2_R;
+				break;
+			case 3:
+				currentQuestionList = question3;
+				currentAList = question3_A;
+				currentBList = question3_B;
+				currentCList = question3_C;
+				currentDList = question3_D;
+				currentRList = question3_R;
+				break;
+			case 4:
+				currentQuestionList = question4;
+				currentAList = question4_A;
+				currentBList = question4_B;
+				currentCList = question4_C;
+				currentDList = question4_D;
+				currentRList = question4_R;
+				break;
+			default:
+				break;
+			}
 		}
 	}
 		
@@ -438,5 +511,58 @@ public class QuestionMainLogicScript : MonoBehaviour {
 
 			hideQuestionPanel ();
 		}
+	}
+
+	private void initRandomList () {
+
+		string[] originList = null;
+		switch (currentChooseRole) {
+		case 1:
+			originList = question1;
+			break;
+		case 2:
+			originList = question2;
+			break;
+		case 3:
+			originList = question3;
+			break;
+		case 4:
+			originList = question4;
+			break;
+		default:
+			break;
+		}
+
+		int count = originList.Length;
+
+		int[] list = new int[9]; 
+
+		for (int i = 0; i < count; ++i) {
+			list [i] = i;
+		}
+		for (int i = count; i < 9; ++i) {
+			list [i] = -1;
+		}
+
+
+		int index = 8;
+
+		while (index >= 1) {
+
+			int targetIndex = (int)(Random.value * index);
+			targetIndex = targetIndex == index ? targetIndex-1 : targetIndex;
+
+			int temp = list [targetIndex];
+			list [targetIndex] = list [index];
+			list [index] = temp;
+	
+			index--;
+		}
+
+		for (int i = 0; i < 9; ++i) {
+
+			randomQuestionList [i] = list [i];
+		}
+
 	}
 }
