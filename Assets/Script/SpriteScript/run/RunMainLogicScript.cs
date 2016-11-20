@@ -25,6 +25,11 @@ public class RunMainLogicScript : MonoBehaviour {
 	
 	}
 
+	public void quitGame() {
+
+		Application.LoadLevel (1);
+	}
+
 	//游戏计时
 	private void timeCount() {
 

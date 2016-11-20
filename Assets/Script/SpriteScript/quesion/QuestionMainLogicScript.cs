@@ -324,6 +324,11 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		}
 	}
 
+	public void quitGame() {
+
+		Application.LoadLevel (1);
+	}
+
 	//创建一个卡片
 	private GameObject createCard(Vector2 pos) {
 

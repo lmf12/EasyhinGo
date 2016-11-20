@@ -115,6 +115,11 @@ public class ArrowMainLogicScript : MonoBehaviour {
 		}
 	}
 
+	public void quitGame() {
+
+		Application.LoadLevel (1);
+	}
+
 	GameObject drawLine(GameObject obj ,Vector2 start, Vector2 end) {
 
 		if (obj == null) {
