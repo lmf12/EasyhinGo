@@ -19,13 +19,14 @@ public class JigsawMainLogicScript : MonoBehaviour {
 
 	public Image origin;
 
+	public Image guize;
+
 	// Use this for initialization
 	void Start () {
 	
 		totalTime = 0;
 		isGameEnd = false;
 
-		InvokeRepeating("timeCount", 1, 1);
 		this.initLocation ();
 	}
 	
@@ -277,6 +278,12 @@ public class JigsawMainLogicScript : MonoBehaviour {
 				PlayerPrefs.SetString ("score_2", "" + totalTime);
 			}
 		}
+	}
+
+	public void closeGuize() {
+
+		guize.transform.localScale = new Vector2 (0, 0);
+		InvokeRepeating("timeCount", 1, 1);
 	}
 }
 

@@ -57,6 +57,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	public Text textItem3;
 	public Text textItem4;
 
+	public Image guize;
+	private bool isBegin;
 
 	private string[] currentQuestionList;
 	private string[] currentAList;
@@ -293,6 +295,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		card = new GameObject[9];
 		isChoose = false;
 		isSelectAnswer = false;
+		isBegin = false;
 
 		randomQuestionList = new int[9];
 	
@@ -306,6 +309,10 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+		if (!isBegin) {
+			return;
+		}
+
 		if (choosePanel.transform.localScale.x == 0 && (Input.touchCount > 0 || Input.GetMouseButtonDown (0))) {                  
 
 			if (Input.touchCount > 0 && Input.GetTouch (0).phase != TouchPhase.Began) {
@@ -460,6 +467,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 
 		if (isChoose) {
 
+			isBegin = true;
 			choosePanel.transform.localScale = new Vector2 (0, 0);
 			initRandomList ();
 
@@ -569,5 +577,12 @@ public class QuestionMainLogicScript : MonoBehaviour {
 			randomQuestionList [i] = list [i];
 		}
 
+	}
+
+	public void closeGuize() {
+
+		guize.transform.localScale = new Vector2 (0, 0);
+
+		choosePanel.transform.localScale = new Vector2 (1, 1);
 	}
 }

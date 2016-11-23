@@ -75,8 +75,6 @@ public class FallMainLogicScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
-		InvokeRepeating("timeCount", 1, 1);
 
 		isMoving = false;
 		isRight = true;
@@ -342,6 +340,8 @@ public class FallMainLogicScript : MonoBehaviour {
 
 		isBegin = true;
 		guize.transform.localScale = new Vector2 (0, 0);
+
+		InvokeRepeating("timeCount", 1, 1);
 	}
 
 	public void createText(string str) {

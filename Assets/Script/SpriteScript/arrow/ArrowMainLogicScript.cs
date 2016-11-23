@@ -28,12 +28,13 @@ public class ArrowMainLogicScript : MonoBehaviour {
 	public Image winBg;
 	public Text scoreText;
 
+	public Image guize;
+
 	// Use this for initialization
 	void Start () {
 
 		totalTime = 0;
 		isGameEnd = false;
-		InvokeRepeating("timeCount", 1, 1);
 
 		score = 0;
 
@@ -213,5 +214,12 @@ public class ArrowMainLogicScript : MonoBehaviour {
 				PlayerPrefs.SetString ("score_4", "" + totalTime);
 			}
 		}
+	}
+
+	public void closeGuize() {
+
+		guize.transform.localScale = new Vector2 (0, 0);
+
+		InvokeRepeating("timeCount", 1, 1);
 	}
 }

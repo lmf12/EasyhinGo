@@ -10,12 +10,12 @@ public class RunMainLogicScript : MonoBehaviour {
 
 	private bool isGameEnd;
 
+	public Image guize;
+
 	// Use this for initialization
 	void Start () {
 	
 		totalTime = 0;
-
-		InvokeRepeating("timeCount", 1, 1);
 
 		isGameEnd = false;
 	}
@@ -76,5 +76,12 @@ public class RunMainLogicScript : MonoBehaviour {
 				PlayerPrefs.SetString ("score_3", "" + totalTime);
 			}
 		}
+	}
+
+	public void closeGuize() {
+
+		guize.transform.localScale = new Vector2 (0, 0);
+
+		InvokeRepeating("timeCount", 1, 1);
 	}
 }
