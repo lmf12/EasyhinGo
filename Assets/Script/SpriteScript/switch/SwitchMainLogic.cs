@@ -190,7 +190,7 @@ public class SwitchMainLogic : MonoBehaviour {
 		for (int i = 0; i < 5; ++i) {
 
 			scoreBgList[i] = (Image)Instantiate (scoreBgPrefab, new Vector2(-100, -100), Quaternion.identity);
-			scoreBgList[i].transform.SetParent (GameObject.Find("Canvas").transform);
+			scoreBgList[i].transform.SetParent (GameObject.Find("scoreContent").transform);
 		}
 
 		scoreList = new Text[5];
@@ -198,7 +198,7 @@ public class SwitchMainLogic : MonoBehaviour {
 		for (int i = 0; i < 5; ++i) {
 
 			scoreList[i] = (Text)Instantiate (scorePrefab, new Vector2(-100, -100), Quaternion.identity);
-			scoreList[i].transform.SetParent (GameObject.Find("Canvas").transform);
+			scoreList[i].transform.SetParent (GameObject.Find("scoreContent").transform);
 
 			//读取分数
 			string str = PlayerPrefs.GetString("score_" + i, "null");
