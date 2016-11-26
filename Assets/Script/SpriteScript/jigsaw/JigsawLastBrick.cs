@@ -18,7 +18,7 @@ public class JigsawLastBrick : MonoBehaviour {
 	private bool isThining = true;    //正在变淡
 	private bool isPlaying = false;  //是否播放动画
 
-	Vector2 targetLoc = new Vector2(2.6f, -3.6f);
+	Vector2 targetLoc = new Vector2(2.6f, -3.3f);
 
 	// Use this for initialization
 	void Start () {

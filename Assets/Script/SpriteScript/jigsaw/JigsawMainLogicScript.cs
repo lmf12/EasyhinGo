@@ -62,7 +62,7 @@ public class JigsawMainLogicScript : MonoBehaviour {
 	private Vector2 getPostionWithIndex(int index) {
 
 		float x = ((index % 3) - 1) * brickWidth;
-		float y = - ((index / 3) - 1) * brickWidth - 1;
+		float y = - ((index / 3) - 1) * brickWidth - 0.7f;
 
 		return new Vector2 (x, y);
 	}
