@@ -176,6 +176,11 @@ public class FallMainLogicScript : MonoBehaviour {
 		Application.LoadLevel (1);
 	}
 
+	public void rePlayGame () {
+
+		Application.LoadLevel (2);
+	}
+
 	public void moveLeft() {
 
 		isLeftPress = true;

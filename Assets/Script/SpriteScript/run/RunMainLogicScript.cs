@@ -30,6 +30,11 @@ public class RunMainLogicScript : MonoBehaviour {
 		Application.LoadLevel (1);
 	}
 
+	public void rePlayGame () {
+
+		Application.LoadLevel (3);
+	}
+
 	//游戏计时
 	private void timeCount() {
 

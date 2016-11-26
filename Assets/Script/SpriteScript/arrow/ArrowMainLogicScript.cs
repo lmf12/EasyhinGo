@@ -119,6 +119,11 @@ public class ArrowMainLogicScript : MonoBehaviour {
 		Application.LoadLevel (1);
 	}
 
+	public void rePlayGame () {
+
+		Application.LoadLevel (5);
+	}
+
 	GameObject drawLine(GameObject obj ,Vector2 start, Vector2 end) {
 
 		if (obj == null) {

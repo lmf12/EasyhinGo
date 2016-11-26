@@ -40,6 +40,11 @@ public class JigsawMainLogicScript : MonoBehaviour {
 		Application.LoadLevel (1);
 	}
 
+	public void rePlayGame () {
+
+		Application.LoadLevel (4);
+	}
+
 	private void initLocation () {
 		
 		string rootName = "jigsaw_img_1_0";
