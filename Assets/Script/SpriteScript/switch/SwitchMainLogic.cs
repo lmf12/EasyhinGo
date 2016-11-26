@@ -220,4 +220,11 @@ public class SwitchMainLogic : MonoBehaviour {
 
 		return minute + " : " + second;
 	}
+
+	public void goHome() {
+
+		PlayerPrefs.SetString ("openHomeWithoutLaunch", "1");
+
+		Application.LoadLevel (0);
+	}
 }

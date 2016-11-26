@@ -43,7 +43,18 @@ public class StratMainLogic : MonoBehaviour {
 
 		initText ();
 
-		Invoke("hideLaunch", 2);
+
+		//是否需要启动页
+		string str = PlayerPrefs.GetString("openHomeWithoutLaunch", "null");
+		if (!str.Equals ("null")) {
+			launch.transform.localScale = new Vector2 (0, 0);
+		} else {
+			Invoke("hideLaunch", 2);
+		}
+		PlayerPrefs.SetString ("openHomeWithoutLaunch", "null");
+
+
+
 		thinSpead = (launch.color.a - 0) / (duration / Time.fixedDeltaTime);
 
 
