@@ -48,6 +48,9 @@ public class SwitchMainLogic : MonoBehaviour {
 	public Text scorePrefab;
 	private Text[] scoreList;
 
+	public Image scoreBgPrefab;
+	private Image[] scoreBgList;
+
 
 	// Use this for initialization
 	void Start () {
@@ -182,6 +185,14 @@ public class SwitchMainLogic : MonoBehaviour {
 
 	private void createScoreList() {
 
+		scoreBgList = new Image[5];
+
+		for (int i = 0; i < 5; ++i) {
+
+			scoreBgList[i] = (Image)Instantiate (scoreBgPrefab, new Vector2(-100, -100), Quaternion.identity);
+			scoreBgList[i].transform.SetParent (GameObject.Find("Canvas").transform);
+		}
+
 		scoreList = new Text[5];
 
 		for (int i = 0; i < 5; ++i) {
@@ -189,25 +200,29 @@ public class SwitchMainLogic : MonoBehaviour {
 			scoreList[i] = (Text)Instantiate (scorePrefab, new Vector2(-100, -100), Quaternion.identity);
 			scoreList[i].transform.SetParent (GameObject.Find("Canvas").transform);
 
-			scoreList [i].color = Color.red;
-
 			//读取分数
 			string str = PlayerPrefs.GetString("score_" + i, "null");
 			if (!str.Equals ("null")) {
 				scoreList [i].text = getTimeStringFromSecond(int.Parse(str));
+				scoreBgList [i].transform.localScale = new Vector2 (1,1);
 			} else {
 				scoreList [i].text = "";
+				scoreBgList [i].transform.localScale = new Vector2 (0,0);
 			}
 		}
 	}
 
 	private void updateScoreLoc() {
 
-		scoreList [0].transform.position = new Vector2 (button1.transform.position.x, button1.transform.position.y + 120);
-		scoreList [1].transform.position = new Vector2 (button2.transform.position.x, button2.transform.position.y + 120);
-		scoreList [2].transform.position = new Vector2 (button3.transform.position.x, button3.transform.position.y + 120);
-		scoreList [3].transform.position = new Vector2 (button4.transform.position.x, button4.transform.position.y + 120);
-		scoreList [4].transform.position = new Vector2 (button5.transform.position.x, button5.transform.position.y + 120);
+		scoreList [0].transform.position = new Vector2 (button1.transform.position.x, button1.transform.position.y + worldToScreenDistance(2.2f));
+		scoreList [1].transform.position = new Vector2 (button2.transform.position.x, button2.transform.position.y + worldToScreenDistance(2.2f));
+		scoreList [2].transform.position = new Vector2 (button3.transform.position.x, button3.transform.position.y + worldToScreenDistance(2.2f));
+		scoreList [3].transform.position = new Vector2 (button4.transform.position.x, button4.transform.position.y + worldToScreenDistance(2.2f));
+		scoreList [4].transform.position = new Vector2 (button5.transform.position.x, button5.transform.position.y + worldToScreenDistance(2.2f));
+
+		for (int i = 0; i < 5; ++i) {
+			scoreBgList [i].transform.position = new Vector2(scoreList [i].transform.position.x,scoreList [i].transform.position.y-worldToScreenDistance(0.1f));
+		}
 	}
 
 	private string getTimeStringFromSecond(int time) {
@@ -226,5 +241,10 @@ public class SwitchMainLogic : MonoBehaviour {
 		PlayerPrefs.SetString ("openHomeWithoutLaunch", "1");
 
 		Application.LoadLevel (0);
+	}
+
+	private float worldToScreenDistance(float distance) {
+
+		return Camera.main.WorldToScreenPoint (new Vector2 (0, distance)).y - Camera.main.WorldToScreenPoint (new Vector2 (0, 0)).y;
 	}
 }
