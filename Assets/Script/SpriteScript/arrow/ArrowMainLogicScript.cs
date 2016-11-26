@@ -111,8 +111,6 @@ public class ArrowMainLogicScript : MonoBehaviour {
 			winBg.transform.localScale = new Vector2 (1, 1);
 
 			saveScore ();
-
-			Application.LoadLevel (1);
 		}
 	}
 
@@ -200,8 +198,12 @@ public class ArrowMainLogicScript : MonoBehaviour {
 
 	public void goBack() {
 
-		Application.LoadLevel (1);
-
+		string str = PlayerPrefs.GetString("isStoryPlayEnd", "null");
+		if (!str.Equals ("null")) {
+			Application.LoadLevel (1);
+		} else {
+			Application.LoadLevel (9);
+		}
 	}
 
 	private void saveScore() {
