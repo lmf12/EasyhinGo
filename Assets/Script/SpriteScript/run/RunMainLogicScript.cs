@@ -89,4 +89,26 @@ public class RunMainLogicScript : MonoBehaviour {
 
 		InvokeRepeating("timeCount", 1, 1);
 	}
+
+	public void openBackPanel() {
+
+		GameObject backBg = GameObject.Find ("back_bg");
+		backBg.transform.localScale = new Vector2 (1, 1);
+	}
+
+	public void closeBackPanel() {
+
+		GameObject backBg = GameObject.Find ("back_bg");
+		backBg.transform.localScale = new Vector2 (0, 0);
+	}
+
+	public void backYClick() {
+
+		quitGame ();
+	}
+
+	public void backNClick() {
+
+		closeBackPanel ();
+	}
 }
