@@ -27,6 +27,8 @@ public class StratMainLogic : MonoBehaviour {
 	public Image rank;
 	public Image input;
 
+	public Image updataTips;
+
 	private WWWHelper wwwHelper;
 
 	private float duration = 1.0f;  //动画持续
@@ -101,7 +103,7 @@ public class StratMainLogic : MonoBehaviour {
 	private void requestWrite(string userid, string name, string time) {
 		
 		requestType = 2;
-		wwwHelper.GET ("http://120.76.243.215/pro/index.php/api/risker/saveInfo?f_client_id="+userid+"&f_nick_name="+name+"&f_score="+time, null);
+		wwwHelper.GET ("http://120.76.243.215/pro/index.php/api/risker/saveInfo?f_client_id="+userid+"&f_nick_name="+name+"&f_score="+time, gameObject);
 	}
 
 	void RequestDone (string result) {
@@ -128,11 +130,14 @@ public class StratMainLogic : MonoBehaviour {
 		
 				int index = int.Parse (rank);
 
-				nameSelf.text = (string)list [index-1] ["f_nick_name"];
-				timeSelf.text = getTimeStringFromSecond (int.Parse ((string)list [index-1] ["f_score"]));
+				nameSelf.text = (string)list [index - 1] ["f_nick_name"];
+				timeSelf.text = getTimeStringFromSecond (int.Parse ((string)list [index - 1] ["f_score"]));
 
 				rankSelf.text = rank;
 			}
+		} else if (requestType == 2) {
+
+			showTips ();
 		}
 	}
 
@@ -225,6 +230,8 @@ public class StratMainLogic : MonoBehaviour {
 		if (name != null && name.Length > 0) {
 			requestWrite (getUserID(),name, "" + ( int.Parse(score0) + int.Parse(score2) + int.Parse(score3) + int.Parse(score4)));
 
+			PlayerPrefs.SetString ("userNickName", iFName.text);
+
 			input.transform.localScale = new Vector2 (0, 0);
 		}
 	}
@@ -238,7 +245,13 @@ public class StratMainLogic : MonoBehaviour {
 
 		if (!score0.Equals ("null") && !score2.Equals ("null") && !score3.Equals ("null") && !score4.Equals ("null")) {
 
-			input.transform.localScale = new Vector2 (1, 1);
+			string str = PlayerPrefs.GetString("userNickName", "null");
+			if (!str.Equals ("null")) {
+				requestWrite (getUserID (), UTF8String(str), "" + (int.Parse (score0) + int.Parse (score2) + int.Parse (score3) + int.Parse (score4)));
+			} else {
+				input.transform.localScale = new Vector2 (1, 1);
+			}
+
 		}
 
 
@@ -247,5 +260,15 @@ public class StratMainLogic : MonoBehaviour {
 	public string UTF8String(string input)
 	{
 		return WWW.EscapeURL (input, System.Text.Encoding.UTF8);
+	}
+
+
+	private void showTips() {
+
+		Image tips = (Image)Instantiate (updataTips, new Vector2 (Screen.width/2, Screen.height * 0.3f), Quaternion.identity);
+
+		tips.transform.SetParent (GameObject.Find("Canvas").transform);
+
+		Destroy (tips, 1.5f);
 	}
 }
