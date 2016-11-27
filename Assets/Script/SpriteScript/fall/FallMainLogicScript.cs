@@ -381,17 +381,22 @@ public class FallMainLogicScript : MonoBehaviour {
 
 		GameObject backBg = GameObject.Find ("back_bg");
 		backBg.transform.localScale = new Vector2 (1, 1);
+
+		Time.timeScale = 0;
 	}
 
 	public void closeBackPanel() {
 
 		GameObject backBg = GameObject.Find ("back_bg");
 		backBg.transform.localScale = new Vector2 (0, 0);
+
+		Time.timeScale = 1;
 	}
 
 	public void backYClick() {
 
 		quitGame ();
+		Time.timeScale = 1;
 	}
 
 	public void backNClick() {
