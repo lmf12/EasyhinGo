@@ -220,7 +220,7 @@ public class StratMainLogic : MonoBehaviour {
 		string score3 = PlayerPrefs.GetString("score_3", "null");
 		string score4 = PlayerPrefs.GetString("score_4", "null");
 
-		string name = iFName.text;
+		string name = UTF8String(iFName.text);
 
 		if (name != null && name.Length > 0) {
 			requestWrite (getUserID(),name, "" + ( int.Parse(score0) + int.Parse(score2) + int.Parse(score3) + int.Parse(score4)));
@@ -242,5 +242,10 @@ public class StratMainLogic : MonoBehaviour {
 		}
 
 
+	}
+
+	public string UTF8String(string input)
+	{
+		return WWW.EscapeURL (input, System.Text.Encoding.UTF8);
 	}
 }
