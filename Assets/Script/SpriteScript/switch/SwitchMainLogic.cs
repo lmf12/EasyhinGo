@@ -199,6 +199,7 @@ public class SwitchMainLogic : MonoBehaviour {
 
 			scoreList[i] = (Text)Instantiate (scorePrefab, new Vector2(-100, -100), Quaternion.identity);
 			scoreList[i].transform.SetParent (GameObject.Find("scoreContent").transform);
+			scoreList [i].fontSize = 32;
 
 			//读取分数
 			string str = PlayerPrefs.GetString("score_" + i, "null");
