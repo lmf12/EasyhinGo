@@ -41,6 +41,8 @@ public class StratMainLogic : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		Application.targetFrameRate = 60;
+
 		creatUserID ();
 
 		initText ();

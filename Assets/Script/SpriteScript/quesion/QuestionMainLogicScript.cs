@@ -67,7 +67,10 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	private string[] currentDList;
 	private string[] currentRList;
 
-
+	public Image word1;
+	public Image word2;
+	public Image word3;
+	public Image word4;
 
 	//随机问题列表
 	private int[] randomQuestionList;
@@ -434,6 +437,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		hideAllPeople ();
 		textureRocy.transform.localScale = new Vector2 (1, 1);
 		btnRoc.GetComponent<Image> ().sprite = btnRoc1;
+
+		showWord (1);
 	}
 
 	public void chooseMono() {
@@ -443,6 +448,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		hideAllPeople ();
 		textureMono.transform.localScale = new Vector2 (1, 1);
 		btnMono.GetComponent<Image> ().sprite = btnMono1;
+
+		showWord (2);
 	}
 
 	public void chooseRay() {
@@ -452,6 +459,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		hideAllPeople ();
 		textureRay.transform.localScale = new Vector2 (1, 1);
 		btnRay.GetComponent<Image> ().sprite = btnRay1;
+
+		showWord (3);
 	}
 
 	public void chooseSong() {
@@ -461,6 +470,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		hideAllPeople ();
 		textureSong.transform.localScale = new Vector2 (1, 1);
 		btnSong.GetComponent<Image> ().sprite = btnSong1;
+
+		showWord (4);
 	}
 
 	public void btnSureClick() {
@@ -584,5 +595,33 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		guize.transform.localScale = new Vector2 (0, 0);
 
 		choosePanel.transform.localScale = new Vector2 (1, 1);
+	}
+
+	private void hideAllWord() {
+
+		word1.transform.localScale = new Vector2 (0, 0);
+		word2.transform.localScale = new Vector2 (0, 0);
+		word3.transform.localScale = new Vector2 (0, 0);
+		word4.transform.localScale = new Vector2 (0, 0);
+	}
+
+	private void showWord(int i) {
+
+		hideAllWord ();
+
+		switch (i) {
+		case 1:
+			word1.transform.localScale = new Vector2 (1, 1);
+			break;
+		case 2:
+			word2.transform.localScale = new Vector2 (1, 1);
+			break;
+		case 3:
+			word3.transform.localScale = new Vector2 (1, 1);
+			break;
+		case 4:
+			word4.transform.localScale = new Vector2 (1, 1);
+			break;
+		}
 	}
 }
