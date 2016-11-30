@@ -72,6 +72,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	public Image word3;
 	public Image word4;
 
+	public Texture2D whiteBg;
+
 	//随机问题列表
 	private int[] randomQuestionList;
 
@@ -172,7 +174,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	private string[] question2_R = {
 		"3:11",
 		"广东省",
-		"",
+		"天蝎座",
 		"何明超",
 		"3",
 		"28"
@@ -230,7 +232,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		"射手座",
 		"梁总",
 		"15",
-		""
+		"专注超越"
 	};
 
 
@@ -357,13 +359,17 @@ public class QuestionMainLogicScript : MonoBehaviour {
 
 		int num = randomQuestionList [index];
 
-		textQuestion.text = num == -1 ? "" : currentQuestionList[num];
-		textItem1.text = num == -1 ? "" : currentAList[num];
-		textItem2.text = num == -1 ? "" : currentBList[num];
-		textItem3.text = num == -1 ? "" : currentCList[num];
-		textItem4.text = num == -1 ? "" : currentDList[num];
+		if (num != -1) {
+			textQuestion.text = num == -1 ? "" : currentQuestionList [num];
+			textItem1.text = num == -1 ? "" : currentAList [num];
+			textItem2.text = num == -1 ? "" : currentBList [num];
+			textItem3.text = num == -1 ? "" : currentCList [num];
+			textItem4.text = num == -1 ? "" : currentDList [num];
 
-		questionPanel.transform.localScale = new Vector2 (1, 1);
+			questionPanel.transform.localScale = new Vector2 (1, 1);
+		} else {
+			changeTexture (card[index], whiteBg);
+		}
 	}
 
 	private void hideQuestionPanel() {
@@ -624,4 +630,5 @@ public class QuestionMainLogicScript : MonoBehaviour {
 			break;
 		}
 	}
+
 }
