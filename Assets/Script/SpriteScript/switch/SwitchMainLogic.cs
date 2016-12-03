@@ -53,6 +53,21 @@ public class SwitchMainLogic : MonoBehaviour {
 	public Image scoreBgPrefab;
 	private Image[] scoreBgList;
 
+	public Texture2D lineRed1;
+	public Texture2D lineRed2;
+	public Texture2D lineRed3;
+	public Texture2D lineRed4;
+
+	public GameObject line1;
+	public GameObject line2;
+	public GameObject line3;
+	public GameObject line4;
+
+	public Sprite buttonRed1;
+	public Sprite buttonRed2;
+	public Sprite buttonRed3;
+	public Sprite buttonRed4;
+	public Sprite buttonRed5;
 
 	// Use this for initialization
 	void Start () {
@@ -68,6 +83,9 @@ public class SwitchMainLogic : MonoBehaviour {
 
 			PlayerPrefs.SetString ("switch_postion", "" + 0);
 		}
+
+
+		updateProgress ();
 	}
 	
 	// Update is called once per frame
@@ -263,5 +281,38 @@ public class SwitchMainLogic : MonoBehaviour {
 		float[] pos = {0, -960, -2458, -3506, -4929};
 
 		scroll.content.anchoredPosition = new Vector2 (pos[index], 0);
+	}
+
+	// 替换精灵的图片
+	private void changeTexture(GameObject obj, Texture2D newTexture) {
+
+		SpriteRenderer spr = obj.GetComponent<SpriteRenderer>();
+		Sprite sp = Sprite.Create(newTexture, spr.sprite.textureRect,new Vector2(0.5f,0.5f));//注意居中显示采用0.5f值  
+		spr.sprite = sp;  
+	}
+
+	//跟新进度
+	private void updateProgress() {
+		
+		Button[] btnList = {button1, button2, button3, button4, button5};
+		Sprite[] btnRedList = {buttonRed1, buttonRed2, buttonRed3, buttonRed4, buttonRed5};
+
+		GameObject[] lineList = {line1, line2, line3, line4};
+		Texture2D[] lineRedList = {lineRed1, lineRed2, lineRed3, lineRed4};
+
+		for (int i = 0; i < 5; ++i) {
+
+			//读取分数
+			string str = PlayerPrefs.GetString("score_" + i, "null");
+			if (!str.Equals ("null")) {
+
+				btnList [i].image.sprite = btnRedList [i];
+
+				if (i != 4) {
+
+					changeTexture (lineList[i], lineRedList[i]);
+				}
+			}
+		}
 	}
 }
