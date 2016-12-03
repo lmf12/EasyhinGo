@@ -28,5 +28,7 @@ public class Story2NextButtonScript : MonoBehaviour,IPointerDownHandler,IPointer
 
 		PlayerPrefs.SetString ("isStoryPlayEnd", "1");
 
+		PlayerPrefs.SetString ("needShowInputInStartPage", "1");
+
 	} 
 }

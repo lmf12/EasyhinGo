@@ -63,6 +63,15 @@ public class StratMainLogic : MonoBehaviour {
 
 
 
+		//是否需要输入框
+		string str1 = PlayerPrefs.GetString("needShowInputInStartPage", "null");
+		if (!str1.Equals ("null")) {
+			input.transform.localScale = new Vector2 (1, 1);
+		} 
+		PlayerPrefs.SetString ("needShowInputInStartPage", "null");
+
+
+
 		thinSpead = (launch.color.a - 0) / (duration / Time.fixedDeltaTime);
 
 
