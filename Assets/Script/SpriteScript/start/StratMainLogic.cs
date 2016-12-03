@@ -38,6 +38,8 @@ public class StratMainLogic : MonoBehaviour {
 
 	private int requestType;
 
+	public Button updateButton;
+
 	// Use this for initialization
 	void Start () {
 
@@ -67,7 +69,7 @@ public class StratMainLogic : MonoBehaviour {
 
 		requestList (getUserID());
 
-
+		showUpdateButton ();
 	}
 	
 	// Update is called once per frame
@@ -223,6 +225,7 @@ public class StratMainLogic : MonoBehaviour {
 	public void inputSubmit() {
 
 		string score0 = PlayerPrefs.GetString("score_0", "null");
+		string score1 = PlayerPrefs.GetString("score_1", "null");
 		string score2 = PlayerPrefs.GetString("score_2", "null");
 		string score3 = PlayerPrefs.GetString("score_3", "null");
 		string score4 = PlayerPrefs.GetString("score_4", "null");
@@ -230,7 +233,7 @@ public class StratMainLogic : MonoBehaviour {
 		string name = UTF8String(iFName.text);
 
 		if (name != null && name.Length > 0) {
-			requestWrite (getUserID(),name, "" + ( int.Parse(score0) + int.Parse(score2) + int.Parse(score3) + int.Parse(score4)));
+			requestWrite (getUserID(),name, "" + ( int.Parse(score0) + int.Parse(score1) + int.Parse(score2) + int.Parse(score3) + int.Parse(score4)));
 
 			PlayerPrefs.SetString ("userNickName", iFName.text);
 
@@ -241,6 +244,7 @@ public class StratMainLogic : MonoBehaviour {
 	public void openInputPanel() {
 
 		string score0 = PlayerPrefs.GetString("score_0", "null");
+		string score1 = PlayerPrefs.GetString("score_1", "null");
 		string score2 = PlayerPrefs.GetString("score_2", "null");
 		string score3 = PlayerPrefs.GetString("score_3", "null");
 		string score4 = PlayerPrefs.GetString("score_4", "null");
@@ -249,7 +253,7 @@ public class StratMainLogic : MonoBehaviour {
 
 			string str = PlayerPrefs.GetString("userNickName", "null");
 			if (!str.Equals ("null")) {
-				requestWrite (getUserID (), UTF8String(str), "" + (int.Parse (score0) + int.Parse (score2) + int.Parse (score3) + int.Parse (score4)));
+				requestWrite (getUserID (), UTF8String(str), "" + (int.Parse (score0)  + int.Parse(score1) + int.Parse (score2) + int.Parse (score3) + int.Parse (score4)));
 			} else {
 				input.transform.localScale = new Vector2 (1, 1);
 			}
@@ -272,5 +276,22 @@ public class StratMainLogic : MonoBehaviour {
 		tips.transform.SetParent (GameObject.Find("Canvas").transform);
 
 		Destroy (tips, 1.5f);
+	}
+
+	private void showUpdateButton() {
+
+		string score0 = PlayerPrefs.GetString("score_0", "null");
+		string score1 = PlayerPrefs.GetString("score_1", "null");
+		string score2 = PlayerPrefs.GetString("score_2", "null");
+		string score3 = PlayerPrefs.GetString("score_3", "null");
+		string score4 = PlayerPrefs.GetString("score_4", "null");
+
+		if (!score0.Equals ("null") && !score1.Equals ("null") && !score2.Equals ("null") && !score3.Equals ("null") && !score4.Equals ("null")) {
+
+			updateButton.transform.localScale = new Vector2 (1, 1);
+		} else {
+
+			updateButton.transform.localScale = new Vector2 (0, 0);
+		}
 	}
 }

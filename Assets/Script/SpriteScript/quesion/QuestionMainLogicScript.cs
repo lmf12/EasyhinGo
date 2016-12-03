@@ -729,6 +729,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 				isGameEnd = true;
 				win.transform.localScale = new Vector2 (1,1);
 				winText.text = textTime.text;
+
+				saveScore ();
 			}
 		}
 	}
@@ -836,5 +838,17 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	public void rePlayGame () {
 
 		Application.LoadLevel (7);
+	}
+
+	private void saveScore() {
+
+		string str = PlayerPrefs.GetString("score_1", "null");
+		if (str.Equals ("null")) {
+			PlayerPrefs.SetString ("score_1", "" + totalTime);
+		} else {
+			if (int.Parse (str) > totalTime) {
+				PlayerPrefs.SetString ("score_1", "" + totalTime);
+			}
+		}
 	}
 }
