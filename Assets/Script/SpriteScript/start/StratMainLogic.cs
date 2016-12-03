@@ -29,6 +29,8 @@ public class StratMainLogic : MonoBehaviour {
 
 	public Image updataTips;
 
+	public Image maker;
+
 	private WWWHelper wwwHelper;
 
 	private float duration = 1.0f;  //动画持续
@@ -293,5 +295,15 @@ public class StratMainLogic : MonoBehaviour {
 
 			updateButton.transform.localScale = new Vector2 (0, 0);
 		}
+	}
+
+	public void showMaker() {
+
+		maker.transform.localScale = new Vector2 (1,1);
+	}
+
+	public void hideMaker() {
+
+		maker.transform.localScale = new Vector2 (0,0);
 	}
 }
