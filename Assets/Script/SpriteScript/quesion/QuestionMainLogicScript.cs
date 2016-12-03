@@ -75,6 +75,11 @@ public class QuestionMainLogicScript : MonoBehaviour {
 
 	public Texture2D whiteBg;
 
+	public GameObject yesPrefab;
+	public GameObject noPrefab;
+
+	private int currentTouchPos;
+
 	//随机问题列表
 	private int[] randomQuestionList;
 
@@ -332,6 +337,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 				if (touchIndex >= 0) {
 
 					showQuestionPanel (touchIndex);
+
+					currentTouchPos = touchIndex;
 				}
 			} 
 		}
@@ -534,8 +541,15 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	//问题面板
 	public void toggleSelect() {
 
-		isSelectAnswer = true;
-		btnQuestionSure.GetComponent<Image> ().sprite = textureSureNormal;
+		if (getCurrentSelectItem() >= 0) {
+
+			isSelectAnswer = true;
+			btnQuestionSure.GetComponent<Image> ().sprite = textureSureNormal;
+		} else {
+
+			isSelectAnswer = false;
+			btnQuestionSure.GetComponent<Image> ().sprite = textureSureDisable;
+		}
 	}
 
 
@@ -544,6 +558,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		if (isSelectAnswer) {
 
 			hideQuestionPanel ();
+
+			createResult (true, currentTouchPos);
 		}
 	}
 
@@ -633,6 +649,28 @@ public class QuestionMainLogicScript : MonoBehaviour {
 			word4.transform.localScale = new Vector2 (1, 1);
 			break;
 		}
+	}
+
+	private int getCurrentSelectItem() {
+
+		if (toggle1.isOn) {
+			return 0;
+		} else if (toggle2.isOn) {
+			return 1;
+		} else if (toggle3.isOn) {
+			return 2;
+		} else if (toggle4.isOn) {
+			return 3;
+		} else {
+			return -1;
+		}
+	}
+
+	private void createResult(bool isTrue, int index) {
+
+		Vector2 pos = new Vector2 (group1originX + cardWidth * (index % 3), group1originY - cardHeight * (index / 3));
+
+		Instantiate (isTrue ? yesPrefab : noPrefab, pos, Quaternion.identity);
 	}
 
 }
