@@ -103,6 +103,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	public Text winText;
 	public Image win;
 
+	private bool isGameStop;
+
 	//研发
 	private string[] question1 = {
 		"研发中心的男女比例是多少？",
@@ -323,6 +325,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		isGameStop = false;
 		totalTime = 0;
 		isGameEnd = false;
 		currentScore = 0;
@@ -345,7 +348,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-		if (!isBegin || isGameEnd) {
+		if (!isBegin || isGameEnd || isGameStop) {
 			return;
 		}
 			
@@ -798,5 +801,40 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		minute = (minute.Length == 1 ? "0" : "") + minute;
 
 		return minute + " : " + second;
+	}
+
+	public void openBackPanel() {
+
+		GameObject backBg = GameObject.Find ("back_bg");
+		backBg.transform.localScale = new Vector2 (1, 1);
+
+		Time.timeScale = 0;
+		isGameStop = true;
+	}
+
+	public void closeBackPanel() {
+
+		GameObject backBg = GameObject.Find ("back_bg");
+		backBg.transform.localScale = new Vector2 (0, 0);
+
+		Time.timeScale = 1;
+		isGameStop = false;
+	}
+
+	public void backYClick() {
+
+		quitGame ();
+		Time.timeScale = 1;
+	}
+
+	public void backNClick() {
+
+		closeBackPanel ();
+	}
+		
+
+	public void rePlayGame () {
+
+		Application.LoadLevel (7);
 	}
 }
