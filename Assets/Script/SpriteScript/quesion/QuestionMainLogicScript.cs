@@ -713,6 +713,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 
 	private void createResult(bool isTrue, int index) {
 
+		playSound (isTrue ? 0 : 1);
+
 		if (resultList [index] != null) {
 
 			Destroy (resultList [index]);
@@ -734,6 +736,10 @@ public class QuestionMainLogicScript : MonoBehaviour {
 				isGameEnd = true;
 				win.transform.localScale = new Vector2 (1,1);
 				winText.text = textTime.text;
+
+				stopAudio ();
+
+				playSound (2);
 
 				saveScore ();
 			}
@@ -860,5 +866,15 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	public void playAudio() {
 
 		GameObject.Find ("audio").GetComponent<AudioSource>().Play();
+	}
+
+	public void stopAudio() {
+
+		GameObject.Find ("audio").GetComponent<AudioSource> ().Stop ();
+	}
+
+	public void playSound(int index) {
+
+		GameObject.Find("Main Camera").GetComponent<CameraScript>().PlaySound (index, false, 1);
 	}
 }

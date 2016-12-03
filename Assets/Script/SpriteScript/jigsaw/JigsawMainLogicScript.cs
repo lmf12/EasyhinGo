@@ -237,6 +237,9 @@ public class JigsawMainLogicScript : MonoBehaviour {
 
 		success.rectTransform.localScale = new Vector2 (1, 1);
 
+		stopAudio ();
+		playSound (0);
+
 		saveScore ();
 	}
 
@@ -327,6 +330,16 @@ public class JigsawMainLogicScript : MonoBehaviour {
 	public void playAudio() {
 
 		GameObject.Find ("audio").GetComponent<AudioSource>().Play();
+	}
+
+	public void stopAudio() {
+
+		GameObject.Find ("audio").GetComponent<AudioSource> ().Stop ();
+	}
+
+	public void playSound(int index) {
+
+		GameObject.Find("Main Camera").GetComponent<CameraScript>().PlaySound (index, false, 1);
 	}
 }
 

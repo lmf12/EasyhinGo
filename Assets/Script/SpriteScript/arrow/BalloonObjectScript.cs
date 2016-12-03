@@ -55,7 +55,7 @@ public class BalloonObjectScript : MonoBehaviour {
 
 		icon.sprite = yellowIcon;
 
-
+		playSound (2);
 	}
 
 	//旋转 从0～2pi  顺时针
@@ -70,5 +70,10 @@ public class BalloonObjectScript : MonoBehaviour {
 		rotation.w = Mathf.Cos(angle / 2);
 
 		obj.transform.localRotation = rotation;
+	}
+
+	public void playSound(int index) {
+
+		GameObject.Find("Main Camera").GetComponent<CameraScript>().PlaySound (index, false, 1);
 	}
 }

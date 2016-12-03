@@ -19,6 +19,8 @@ public class StarScript : MonoBehaviour {
 	private bool isGet = false;
 	private bool isWin = false;
 
+	private bool isEnd = false;
+
 	// Use this for initialization
 	void Start () {
 
@@ -28,6 +30,7 @@ public class StarScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
+
 
 		if (isGet) {
 			transform.Translate (new Vector2(0f, 0.1f));
@@ -40,9 +43,16 @@ public class StarScript : MonoBehaviour {
 			
 		if (isWin) {
 
+			stopAudio ();
+			if (!isEnd) {
+				playSound (1);
+			}
+
 			scoreText.text = GameObject.Find ("RunMainLogic").GetComponent<RunMainLogicScript> ().getTimeString ();
 			win.transform.localScale = new Vector2 (1, 1);
 			GameObject.Find ("RunMainLogic").GetComponent<RunMainLogicScript> ().setGameEnd ();
+
+			isEnd = true;
 		}
 			
 	}
@@ -99,5 +109,15 @@ public class StarScript : MonoBehaviour {
 			}
 		}
 
+	}
+
+	public void stopAudio() {
+
+		GameObject.Find ("audio").GetComponent<AudioSource> ().Stop ();
+	}
+
+	public void playSound(int index) {
+
+		GameObject.Find("Main Camera").GetComponent<CameraScript>().PlaySound (index, false, 1);
 	}
 }

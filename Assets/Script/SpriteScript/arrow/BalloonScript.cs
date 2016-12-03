@@ -52,11 +52,18 @@ public class BalloonScript : MonoBehaviour {
 
 			Destroy (obj.GetComponent<DistanceJoint2D>());
 			Destroy (gameObject);
+
+			playSound (1);
 		}
 
 	}
 
 	void OnTriggerExit2D(Collider2D other) {
 
+	}
+
+	public void playSound(int index) {
+
+		GameObject.Find("Main Camera").GetComponent<CameraScript>().PlaySound (index, false, 1);
 	}
 }

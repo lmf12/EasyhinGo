@@ -105,12 +105,18 @@ public class ArrowMainLogicScript : MonoBehaviour {
 
 		if (score >= 4) {
 
-			isGameEnd = true;
-
 			scoreText.text = textTime.text;
 			winBg.transform.localScale = new Vector2 (1, 1);
 
 			saveScore ();
+
+			stopAudio ();
+
+			if (!isGameEnd) {
+				playSound (3);
+			}
+
+			isGameEnd = true;
 		}
 	}
 
@@ -266,5 +272,15 @@ public class ArrowMainLogicScript : MonoBehaviour {
 	public void playAudio() {
 
 		GameObject.Find ("audio").GetComponent<AudioSource>().Play();
+	}
+
+	public void stopAudio() {
+
+		GameObject.Find ("audio").GetComponent<AudioSource> ().Stop ();
+	}
+
+	public void playSound(int index) {
+
+		GameObject.Find("Main Camera").GetComponent<CameraScript>().PlaySound (index, false, 1);
 	}
 }

@@ -18,6 +18,9 @@ public class JigsawLastBrick : MonoBehaviour {
 	private bool isThining = true;    //正在变淡
 	private bool isPlaying = false;  //是否播放动画
 
+
+	private bool isEnd = false;
+
 	Vector2 targetLoc = new Vector2(2.6f, -3.3f);
 
 	// Use this for initialization
@@ -34,7 +37,7 @@ public class JigsawLastBrick : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 
-		if (!isPlaying) {
+		if (!isPlaying || isEnd) {
 			return;
 		}
 
@@ -108,6 +111,8 @@ public class JigsawLastBrick : MonoBehaviour {
 		if (transform.position.x == targetLoc.x && transform.position.y == targetLoc.y && transform.localScale.x == originScale && this.GetComponent<SpriteRenderer> ().color.a == 1) {
 			GameObject mainLogic = GameObject.Find("MainLogic");
 			mainLogic.GetComponent<JigsawMainLogicScript> ().showSuccessImage ();
+
+			isEnd = true;
 		}
 			
 	}

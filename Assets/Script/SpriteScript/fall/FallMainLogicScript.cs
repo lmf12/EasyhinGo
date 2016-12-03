@@ -156,6 +156,10 @@ public class FallMainLogicScript : MonoBehaviour {
 			winText.text = textTime.text;
 			win.transform.localScale = new Vector2 (1, 1);
 
+			stopAudio ();
+
+			playSound (2);
+
 			saveScore ();
 
 			destoryObj (currentObj1);
@@ -411,5 +415,15 @@ public class FallMainLogicScript : MonoBehaviour {
 	public void playAudio() {
 
 		GameObject.Find ("audio").GetComponent<AudioSource>().Play();
+	}
+
+	public void stopAudio() {
+
+		GameObject.Find ("audio").GetComponent<AudioSource> ().Stop ();
+	}
+
+	public void playSound(int index) {
+
+		GameObject.Find("Main Camera").GetComponent<CameraScript>().PlaySound (index, false, 1);
 	}
 }

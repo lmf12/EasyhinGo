@@ -45,6 +45,8 @@ public class FallHeadScript : MonoBehaviour {
 
 		if (other.gameObject.name.Equals ("people_1")) {
 
+			playSound (0);
+
 			string str = "捕获 ";
 
 			if (gameObject.name.Equals ("MonoPrefab(Clone)")) {
@@ -83,5 +85,10 @@ public class FallHeadScript : MonoBehaviour {
 
 	void OnTriggerExit2D(Collider2D other) {
 
+	}
+
+	public void playSound(int index) {
+
+		GameObject.Find("Main Camera").GetComponent<CameraScript>().PlaySound (index, false, 1);
 	}
 }

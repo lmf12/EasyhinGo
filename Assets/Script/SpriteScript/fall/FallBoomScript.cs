@@ -30,9 +30,16 @@ public class FallBoomScript : MonoBehaviour {
 
 		Destroy (gameObject, 0.1f);
 		Destroy (fire, 0.2f);
+
+		playSound (1);
 	}
 
 	void OnTriggerExit2D(Collider2D other) {
 
+	}
+
+	public void playSound(int index) {
+
+		GameObject.Find("Main Camera").GetComponent<CameraScript>().PlaySound (index, false, 1);
 	}
 }

@@ -58,6 +58,8 @@ public class BowScript : MonoBehaviour {
 
 				transform.localScale = new Vector2 (1, 1);
 				bow2.transform.localScale = new Vector2 (0, 0);
+
+				playSound (0);
 			}
 		}
 
@@ -133,5 +135,10 @@ public class BowScript : MonoBehaviour {
 	private void updateBow2() {
 
 		bow2.transform.localRotation = transform.localRotation;
+	}
+
+	public void playSound(int index) {
+
+		GameObject.Find("Main Camera").GetComponent<CameraScript>().PlaySound (index, false, 1);
 	}
 }
