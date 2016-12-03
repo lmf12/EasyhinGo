@@ -26,6 +26,8 @@ public class SwitchMainLogic : MonoBehaviour {
 
 	public Image mainLoc;
 
+	public ScrollRect scroll;
+
 	bool isScrolling = false;
 
 	private float baseVelocity = 12.0f;
@@ -59,6 +61,13 @@ public class SwitchMainLogic : MonoBehaviour {
 		originMainX = Camera.main.ScreenToWorldPoint (mainLoc.transform.position).x;
 
 		createScoreList();
+
+		string str = PlayerPrefs.GetString("switch_postion", "null");
+		if (!str.Equals ("null")) {
+			setPosition (int.Parse(str));
+
+			PlayerPrefs.SetString ("switch_postion", "" + 0);
+		}
 	}
 	
 	// Update is called once per frame
@@ -247,5 +256,12 @@ public class SwitchMainLogic : MonoBehaviour {
 	private float worldToScreenDistance(float distance) {
 
 		return Camera.main.WorldToScreenPoint (new Vector2 (0, distance)).y - Camera.main.WorldToScreenPoint (new Vector2 (0, 0)).y;
+	}
+
+	private void setPosition(int index) {
+
+		float[] pos = {0, -960, -2458, -3506, -4929};
+
+		scroll.content.anchoredPosition = new Vector2 (pos[index], 0);
 	}
 }

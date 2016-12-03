@@ -117,6 +117,8 @@ public class ArrowMainLogicScript : MonoBehaviour {
 	public void quitGame() {
 
 		Application.LoadLevel (1);
+
+		PlayerPrefs.SetString ("switch_postion", "" + 4);
 	}
 
 	public void rePlayGame () {
@@ -206,6 +208,8 @@ public class ArrowMainLogicScript : MonoBehaviour {
 		string str = PlayerPrefs.GetString("isStoryPlayEnd", "null");
 		if (!str.Equals ("null")) {
 			Application.LoadLevel (1);
+
+			PlayerPrefs.SetString ("switch_postion", "" + 4);
 		} else {
 			Application.LoadLevel (9);
 		}

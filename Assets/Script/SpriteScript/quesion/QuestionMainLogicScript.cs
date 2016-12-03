@@ -376,6 +376,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	public void quitGame() {
 
 		Application.LoadLevel (1);
+
+		PlayerPrefs.SetString ("switch_postion", "" + 1);
 	}
 
 	//创建一个卡片

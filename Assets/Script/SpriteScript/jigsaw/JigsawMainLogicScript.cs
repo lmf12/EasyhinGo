@@ -38,6 +38,8 @@ public class JigsawMainLogicScript : MonoBehaviour {
 	public void quitGame() {
 
 		Application.LoadLevel (1);
+
+		PlayerPrefs.SetString ("switch_postion", "" + 2);
 	}
 
 	public void rePlayGame () {
@@ -223,6 +225,8 @@ public class JigsawMainLogicScript : MonoBehaviour {
 	public void goContinue() {
 
 		Application.LoadLevel (1);
+
+		PlayerPrefs.SetString ("switch_postion", "" + 2);
 	}
 
 	public void showSuccessImage() {

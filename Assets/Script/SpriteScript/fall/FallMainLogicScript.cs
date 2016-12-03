@@ -174,6 +174,8 @@ public class FallMainLogicScript : MonoBehaviour {
 	public void quitGame() {
 
 		Application.LoadLevel (1);
+
+		PlayerPrefs.SetString ("switch_postion", "" + 0);
 	}
 
 	public void rePlayGame () {

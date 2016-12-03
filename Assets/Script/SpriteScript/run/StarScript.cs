@@ -70,6 +70,8 @@ public class StarScript : MonoBehaviour {
 
 		Application.LoadLevel (1);
 
+		PlayerPrefs.SetString ("switch_postion", "" + 3);
+
 	}
 
 	private void updateScoreView() {

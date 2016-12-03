@@ -28,6 +28,8 @@ public class RunMainLogicScript : MonoBehaviour {
 	public void quitGame() {
 
 		Application.LoadLevel (1);
+
+		PlayerPrefs.SetString ("switch_postion", "" + 3);
 	}
 
 	public void rePlayGame () {
