@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using LitJson;
 
 public class SwitchMainLogic : MonoBehaviour {
 
@@ -69,8 +70,37 @@ public class SwitchMainLogic : MonoBehaviour {
 	public Sprite buttonRed4;
 	public Sprite buttonRed5;
 
+
+
+
+	public Text name1;
+	public Text name2;
+	public Text name3;
+	public Text name4;
+	public Text name5;
+	public Text nameSelf;
+
+	public Text time1;
+	public Text time2;
+	public Text time3;
+	public Text time4;
+	public Text time5;
+	public Text timeSelf;
+
+	public Text rankSelf;
+
+	public Image rank;
+
+
+	private WWWHelper wwwHelper;
+
 	// Use this for initialization
 	void Start () {
+
+		initText ();
+
+		wwwHelper = GameObject.Find ("HttpHelper").GetComponent<WWWHelper> ();
+		requestList (getUserID());
 
 		originLocX = background1.transform.position.x;
 		originMainX = Camera.main.ScreenToWorldPoint (mainLoc.transform.position).x;
@@ -367,5 +397,74 @@ public class SwitchMainLogic : MonoBehaviour {
 		Application.LoadLevel (5);
 	}
 
+
+	private void requestList(string userid) {
+
+		wwwHelper.GET ("http://120.76.243.215/pro/index.php/api/risker/getRankingList?f_client_id="+userid, gameObject);
+	}
+
+	private string getUserID () {
+
+		return PlayerPrefs.GetString("userid", "null");
+	}
+
+	void RequestDone (string result) {
+
+		JsonData jd = JsonMapper.ToObject (result);
+
+		string rank = (string)jd ["result"] ["ranking"];
+
+		JsonData list = jd ["result"] ["list"]; 
+
+		Text[] nameList = { name1, name2, name3, name4, name5 };
+		Text[] scoreList = { time1, time2, time3, time4, time5 };
+
+		for (int i = 0; i < list.Count && i < 5; i++) {
+			nameList [i].text = (string)list [i] ["f_nick_name"];
+			scoreList [i].text = getTimeStringFromSecond (int.Parse ((string)list [i] ["f_score"]));
+		}
+
+
+		if (int.Parse (rank) >= 0 && int.Parse (rank) <= list.Count) {
+
+			int index = int.Parse (rank);
+
+			nameSelf.text = (string)list [index - 1] ["f_nick_name"];
+			timeSelf.text = getTimeStringFromSecond (int.Parse ((string)list [index - 1] ["f_score"]));
+
+			rankSelf.text = rank;
+		}
+
+	}
+
+	public void openRankPanel() {
+
+		rank.transform.localScale = new Vector2 (1,1);
+	}
+
+	public void closeRankPanel() {
+		
+		rank.transform.localScale = new Vector2 (0,0);
+	}
+
+	private void initText() {
+
+		name1.text = "--";
+		name2.text = "--";
+		name3.text = "--";
+		name4.text = "--";
+		name5.text = "--";
+
+		time1.text = "--";
+		time2.text = "--";
+		time3.text = "--";
+		time4.text = "--";
+		time5.text = "--";
+
+		nameSelf.text = "暂无";
+		timeSelf.text = "--";
+
+		rankSelf.text = "-";
+	}
 
 }
