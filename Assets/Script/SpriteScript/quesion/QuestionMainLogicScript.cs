@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -17,6 +17,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	public Image choosePanel;
 	public Image questionPanel;
 	public Sprite textureSureNormal;
+	public Sprite textureSureDisable;
 
 	public Button btnRay;
 	public Button btnMono;
@@ -379,6 +380,9 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		toggle3.isOn = false;
 		toggle4.isOn = false;
 		questionPanel.transform.localScale = new Vector2 (0, 0);
+
+		isSelectAnswer = false;
+		btnQuestionSure.GetComponent<Image> ().sprite = textureSureDisable;
 	}
 
 	//获取被点中的卡片
