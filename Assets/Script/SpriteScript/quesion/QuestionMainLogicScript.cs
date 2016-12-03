@@ -87,6 +87,22 @@ public class QuestionMainLogicScript : MonoBehaviour {
 
 	private GameObject[] resultList;
 
+	private int currentScore;
+
+	public Image score1;
+	public Image score2;
+	public Image score3;
+	public Image score4;
+
+	public Sprite starYellow;
+
+	private bool isGameEnd;
+	private int totalTime;
+	public Text textTime;
+
+	public Text winText;
+	public Image win;
+
 	//研发
 	private string[] question1 = {
 		"研发中心的男女比例是多少？",
@@ -307,6 +323,9 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		totalTime = 0;
+		isGameEnd = false;
+		currentScore = 0;
 		card = new GameObject[9];
 		isChoose = false;
 		isSelectAnswer = false;
@@ -326,9 +345,10 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-		if (!isBegin) {
+		if (!isBegin || isGameEnd) {
 			return;
 		}
+			
 
 		if (choosePanel.transform.localScale.x == 0 && (Input.touchCount > 0 || Input.GetMouseButtonDown (0))) {                  
 
@@ -513,6 +533,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 			choosePanel.transform.localScale = new Vector2 (0, 0);
 			initRandomList ();
 
+			InvokeRepeating("timeCount", 1, 1);
+
 			switch (currentChooseRole) {
 			case 1:
 				currentQuestionList = question1;
@@ -693,6 +715,19 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		resultList [index] = (GameObject)Instantiate (isTrue ? yesPrefab : noPrefab, pos, Quaternion.identity);
 
 		changeTexture (card[index], cardOpen);
+
+		if (isTrue) {
+
+			currentScore++;
+			updateScoreView ();
+
+			if (currentScore >= 4) {
+
+				isGameEnd = true;
+				win.transform.localScale = new Vector2 (1,1);
+				winText.text = textTime.text;
+			}
+		}
 	}
 
 	private bool isAnswerTrue(string answer) {
@@ -713,5 +748,55 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		} else {
 			return "";
 		}
+	}
+
+
+	private void updateScoreView() {
+
+		if (currentScore > 0) {
+
+			score1.sprite = starYellow;
+
+			if (currentScore > 1) {
+
+				score2.sprite = starYellow;
+
+				if (currentScore > 2) {
+
+					score3.sprite = starYellow;
+
+					if (currentScore > 3) {
+
+						score4.sprite = starYellow;
+
+					}
+				}
+			}
+		}
+
+	}
+
+	//游戏计时
+	private void timeCount() {
+
+		if (isGameEnd) {
+
+			CancelInvoke ();
+			return;
+		}
+
+		totalTime += 1;
+		textTime.text = getTimeStringFromSecond();
+	}
+
+	private string getTimeStringFromSecond() {
+
+		string second = "" + (totalTime % 60);
+		string minute = "" + ((totalTime / 60) % 60);
+
+		second = (second.Length == 1 ? "0" : "") + second;
+		minute = (minute.Length == 1 ? "0" : "") + minute;
+
+		return minute + " : " + second;
 	}
 }
