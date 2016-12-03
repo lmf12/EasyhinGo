@@ -80,8 +80,12 @@ public class QuestionMainLogicScript : MonoBehaviour {
 
 	private int currentTouchPos;
 
+	public Texture2D cardOpen; 
+
 	//随机问题列表
 	private int[] randomQuestionList;
+
+	private GameObject[] resultList;
 
 	//研发
 	private string[] question1 = {
@@ -309,6 +313,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		isBegin = false;
 
 		randomQuestionList = new int[9];
+
+		resultList = new GameObject[9];
 	
 		for (int i = 0; i < 9; ++i) {
 			card[i] = createCard (new Vector2(group1originX + cardWidth * (i % 3), group1originY - cardHeight * (i / 3)));
@@ -364,6 +370,14 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	}
 
 	private void showQuestionPanel(int index) {
+
+		//选对，不用再打开
+		if (resultList [index] != null && resultList [index].name.Split('(')[0].Equals("QuestionYesPrefab")) {
+
+			return;
+		}
+
+
 
 		int num = randomQuestionList [index];
 
@@ -557,9 +571,10 @@ public class QuestionMainLogicScript : MonoBehaviour {
 
 		if (isSelectAnswer) {
 
+			createResult (isAnswerTrue(getCurrentSelectString()), currentTouchPos);
+
 			hideQuestionPanel ();
 
-			createResult (true, currentTouchPos);
 		}
 	}
 
@@ -668,9 +683,35 @@ public class QuestionMainLogicScript : MonoBehaviour {
 
 	private void createResult(bool isTrue, int index) {
 
+		if (resultList [index] != null) {
+
+			Destroy (resultList [index]);
+		}
+
 		Vector2 pos = new Vector2 (group1originX + cardWidth * (index % 3), group1originY - cardHeight * (index / 3));
 
-		Instantiate (isTrue ? yesPrefab : noPrefab, pos, Quaternion.identity);
+		resultList [index] = (GameObject)Instantiate (isTrue ? yesPrefab : noPrefab, pos, Quaternion.identity);
+
+		changeTexture (card[index], cardOpen);
 	}
 
+	private bool isAnswerTrue(string answer) {
+
+		return currentRList [randomQuestionList [currentTouchPos]].Equals (answer);
+	}
+
+	private string getCurrentSelectString() {
+
+		if (toggle1.isOn) {
+			return currentAList [randomQuestionList [currentTouchPos]];
+		} else if (toggle2.isOn) {
+			return currentBList [randomQuestionList [currentTouchPos]];
+		} else if (toggle3.isOn) {
+			return currentCList [randomQuestionList [currentTouchPos]];
+		} else if (toggle4.isOn) {
+			return currentDList [randomQuestionList [currentTouchPos]];
+		} else {
+			return "";
+		}
+	}
 }
