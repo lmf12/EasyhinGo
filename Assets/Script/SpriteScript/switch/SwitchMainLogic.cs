@@ -315,4 +315,57 @@ public class SwitchMainLogic : MonoBehaviour {
 			}
 		}
 	}
+
+
+
+	public void go1() {
+
+		Application.LoadLevel (2);
+	}
+
+	public void go2() {
+
+		string str = PlayerPrefs.GetString("score_0", "null");
+		if (str.Equals ("null")) {
+
+			return;
+		}
+
+		Application.LoadLevel (7);
+	}
+
+	public void go3() {
+
+		string str = PlayerPrefs.GetString("score_1", "null");
+		if (str.Equals ("null")) {
+
+			return;
+		}
+
+		Application.LoadLevel (4);
+	}
+
+	public void go4() {
+
+		string str = PlayerPrefs.GetString("score_2", "null");
+		if (str.Equals ("null")) {
+
+			return;
+		}
+
+		Application.LoadLevel (3);
+	}
+
+	public void go5() {
+
+		string str = PlayerPrefs.GetString("score_3", "null");
+		if (str.Equals ("null")) {
+
+			return;
+		}
+
+		Application.LoadLevel (5);
+	}
+
+
 }
