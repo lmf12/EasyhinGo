@@ -116,6 +116,8 @@ public class SwitchMainLogic : MonoBehaviour {
 
 
 		updateProgress ();
+
+		playAudio ();
 	}
 	
 	// Update is called once per frame
@@ -465,6 +467,11 @@ public class SwitchMainLogic : MonoBehaviour {
 		timeSelf.text = "--";
 
 		rankSelf.text = "-";
+	}
+
+	public void playAudio() {
+
+		GameObject.Find ("audio").GetComponent<AudioSource>().Play();
 	}
 
 }

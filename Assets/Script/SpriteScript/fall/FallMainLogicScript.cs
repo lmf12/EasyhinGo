@@ -349,6 +349,8 @@ public class FallMainLogicScript : MonoBehaviour {
 		guize.transform.localScale = new Vector2 (0, 0);
 
 		InvokeRepeating("timeCount", 1, 1);
+
+		playAudio ();
 	}
 
 	public void createText(string str) {
@@ -404,5 +406,10 @@ public class FallMainLogicScript : MonoBehaviour {
 	public void backNClick() {
 
 		closeBackPanel ();
+	}
+
+	public void playAudio() {
+
+		GameObject.Find ("audio").GetComponent<AudioSource>().Play();
 	}
 }

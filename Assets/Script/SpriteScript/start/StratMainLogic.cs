@@ -42,8 +42,12 @@ public class StratMainLogic : MonoBehaviour {
 
 	public Button updateButton;
 
+	private bool isMusicPlay;
+
 	// Use this for initialization
 	void Start () {
+
+		isMusicPlay = false;
 
 		Application.targetFrameRate = 60;
 
@@ -105,6 +109,12 @@ public class StratMainLogic : MonoBehaviour {
 				launch.transform.localScale = new Vector2 (0, 0);
 				isPlaying = false;
 			}
+		}
+
+		if (launch.transform.localScale.x == 0 && !isMusicPlay) {
+
+			isMusicPlay = true;
+			playAudio ();
 		}
 
 	}
@@ -314,5 +324,10 @@ public class StratMainLogic : MonoBehaviour {
 	public void hideMaker() {
 
 		maker.transform.localScale = new Vector2 (0,0);
+	}
+
+	public void playAudio() {
+
+		GameObject.Find ("audio").GetComponent<AudioSource>().Play();
 	}
 }

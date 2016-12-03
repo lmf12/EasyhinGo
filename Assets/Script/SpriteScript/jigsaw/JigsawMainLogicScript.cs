@@ -293,6 +293,8 @@ public class JigsawMainLogicScript : MonoBehaviour {
 
 		guize.transform.localScale = new Vector2 (0, 0);
 		InvokeRepeating("timeCount", 1, 1);
+
+		playAudio ();
 	}
 
 	public void openBackPanel() {
@@ -320,6 +322,11 @@ public class JigsawMainLogicScript : MonoBehaviour {
 	public void backNClick() {
 
 		closeBackPanel ();
+	}
+
+	public void playAudio() {
+
+		GameObject.Find ("audio").GetComponent<AudioSource>().Play();
 	}
 }
 

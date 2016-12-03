@@ -538,6 +538,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 			choosePanel.transform.localScale = new Vector2 (0, 0);
 			initRandomList ();
 
+			playAudio ();
+
 			InvokeRepeating("timeCount", 1, 1);
 
 			switch (currentChooseRole) {
@@ -663,6 +665,7 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		guize.transform.localScale = new Vector2 (0, 0);
 
 		choosePanel.transform.localScale = new Vector2 (1, 1);
+
 	}
 
 	private void hideAllWord() {
@@ -852,5 +855,10 @@ public class QuestionMainLogicScript : MonoBehaviour {
 				PlayerPrefs.SetString ("score_1", "" + totalTime);
 			}
 		}
+	}
+
+	public void playAudio() {
+
+		GameObject.Find ("audio").GetComponent<AudioSource>().Play();
 	}
 }

@@ -90,6 +90,8 @@ public class RunMainLogicScript : MonoBehaviour {
 		guize.transform.localScale = new Vector2 (0, 0);
 
 		InvokeRepeating("timeCount", 1, 1);
+
+		playAudio ();
 	}
 
 	public void openBackPanel() {
@@ -117,5 +119,10 @@ public class RunMainLogicScript : MonoBehaviour {
 	public void backNClick() {
 
 		closeBackPanel ();
+	}
+
+	public void playAudio() {
+
+		GameObject.Find ("audio").GetComponent<AudioSource>().Play();
 	}
 }
