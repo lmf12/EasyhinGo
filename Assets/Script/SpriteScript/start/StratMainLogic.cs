@@ -130,7 +130,7 @@ public class StratMainLogic : MonoBehaviour {
 			}
 
 
-			if (int.Parse (rank) >= 0 && int.Parse (rank) < list.Count) {
+			if (int.Parse (rank) >= 0 && int.Parse (rank) <= list.Count) {
 		
 				int index = int.Parse (rank);
 
