@@ -91,6 +91,10 @@ public class SwitchMainLogic : MonoBehaviour {
 
 	public Image rank;
 
+	public Button music;
+	public Sprite musicOn;
+	public Sprite musicOff;
+
 
 	private WWWHelper wwwHelper;
 
@@ -118,6 +122,8 @@ public class SwitchMainLogic : MonoBehaviour {
 		updateProgress ();
 
 		playAudio ();
+
+		initMusicBtn ();
 	}
 	
 	// Update is called once per frame
@@ -471,7 +477,52 @@ public class SwitchMainLogic : MonoBehaviour {
 
 	public void playAudio() {
 
+		string str1 = PlayerPrefs.GetString("closeMusic", "null");
+		if (!str1.Equals ("null") && int.Parse (str1) == 1) {
+			return;
+		}
+
 		GameObject.Find ("audio").GetComponent<AudioSource>().Play();
 	}
 
+	public void stopAudio() {
+
+		GameObject.Find ("audio").GetComponent<AudioSource> ().Stop ();
+	}
+
+
+	public void openMusic() {
+
+		PlayerPrefs.SetString ("closeMusic", "" + 0);
+		playAudio ();
+		music.image.sprite = musicOn;
+	}
+
+	public void closeMusic() {
+
+		PlayerPrefs.SetString ("closeMusic", "" + 1);
+		stopAudio ();
+		music.image.sprite = musicOff;
+	}
+
+	public void onMusicClick() {
+
+		string str1 = PlayerPrefs.GetString("closeMusic", "null");
+		if (!str1.Equals ("null") && int.Parse (str1) == 1) {
+			openMusic ();
+		} else {
+			closeMusic ();
+		}
+	}
+
+	public void initMusicBtn() {
+
+		string str1 = PlayerPrefs.GetString("closeMusic", "null");
+		if (!str1.Equals ("null") && int.Parse (str1) == 1) {
+			music.image.sprite = musicOff;
+		} else {
+			music.image.sprite = musicOn;
+		}
+
+	}
 }
