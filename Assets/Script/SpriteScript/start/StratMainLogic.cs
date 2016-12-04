@@ -328,6 +328,11 @@ public class StratMainLogic : MonoBehaviour {
 
 	public void playAudio() {
 
+		string str1 = PlayerPrefs.GetString("closeMusic", "null");
+		if (!str1.Equals ("null") && int.Parse (str1) == 1) {
+			return;
+		}
+
 		GameObject.Find ("audio").GetComponent<AudioSource>().Play();
 	}
 }

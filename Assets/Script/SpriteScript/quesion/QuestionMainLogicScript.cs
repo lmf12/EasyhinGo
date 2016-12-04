@@ -105,6 +105,13 @@ public class QuestionMainLogicScript : MonoBehaviour {
 
 	private bool isGameStop;
 
+
+	public Button music;
+	public Button music1;
+	public Sprite musicOn;
+	public Sprite musicOff;
+
+
 	//研发
 	private string[] question1 = {
 		"研发中心的男女比例是多少？",
@@ -343,6 +350,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 		}
 
 		hideAllPeople ();
+
+		initMusicBtn ();
 	}
 	
 	// Update is called once per frame
@@ -733,6 +742,8 @@ public class QuestionMainLogicScript : MonoBehaviour {
 
 			if (currentScore >= 4) {
 
+				initMusicBtn1 ();
+
 				isGameEnd = true;
 				win.transform.localScale = new Vector2 (1,1);
 				winText.text = textTime.text;
@@ -865,6 +876,11 @@ public class QuestionMainLogicScript : MonoBehaviour {
 
 	public void playAudio() {
 
+		string str1 = PlayerPrefs.GetString("closeMusic", "null");
+		if (!str1.Equals ("null") && int.Parse (str1) == 1) {
+			return;
+		}
+
 		GameObject.Find ("audio").GetComponent<AudioSource>().Play();
 	}
 
@@ -876,5 +892,53 @@ public class QuestionMainLogicScript : MonoBehaviour {
 	public void playSound(int index) {
 
 		GameObject.Find("Main Camera").GetComponent<CameraScript>().PlaySound (index, false, 1);
+	}
+
+	public void openMusic() {
+
+		PlayerPrefs.SetString ("closeMusic", "" + 0);
+		playAudio ();
+		music.image.sprite = musicOn;
+		music1.image.sprite = musicOn;
+	}
+
+	public void closeMusic() {
+
+		PlayerPrefs.SetString ("closeMusic", "" + 1);
+		stopAudio ();
+		music.image.sprite = musicOff;
+		music1.image.sprite = musicOff;
+	}
+
+	public void onMusicClick() {
+
+		string str1 = PlayerPrefs.GetString("closeMusic", "null");
+		if (!str1.Equals ("null") && int.Parse (str1) == 1) {
+			openMusic ();
+		} else {
+			closeMusic ();
+		}
+	}
+
+	public void initMusicBtn() {
+
+		string str1 = PlayerPrefs.GetString("closeMusic", "null");
+		if (!str1.Equals ("null") && int.Parse (str1) == 1) {
+			music.image.sprite = musicOff;
+		} else {
+			music.image.sprite = musicOn;
+		}
+
+	}
+
+	public void initMusicBtn1() {
+
+		string str1 = PlayerPrefs.GetString("closeMusic", "null");
+		if (!str1.Equals ("null") && int.Parse (str1) == 1) {
+			music1.image.sprite = musicOff;
+		} else {
+			music1.image.sprite = musicOn;
+		}
+
 	}
 }

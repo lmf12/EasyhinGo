@@ -12,12 +12,19 @@ public class RunMainLogicScript : MonoBehaviour {
 
 	public Image guize;
 
+	public Button music;
+	public Button music1;
+	public Sprite musicOn;
+	public Sprite musicOff;
+
 	// Use this for initialization
 	void Start () {
 	
 		totalTime = 0;
 
 		isGameEnd = false;
+
+		initMusicBtn ();
 	}
 	
 	// Update is called once per frame
@@ -71,6 +78,8 @@ public class RunMainLogicScript : MonoBehaviour {
 		saveScore ();
 
 		isGameEnd = true;
+
+		initMusicBtn1 ();
 	}
 
 	private void saveScore() {
@@ -123,6 +132,66 @@ public class RunMainLogicScript : MonoBehaviour {
 
 	public void playAudio() {
 
+		string str1 = PlayerPrefs.GetString("closeMusic", "null");
+		if (!str1.Equals ("null") && int.Parse (str1) == 1) {
+			return;
+		}
+
 		GameObject.Find ("audio").GetComponent<AudioSource>().Play();
+	}
+
+
+	public void stopAudio() {
+
+		GameObject.Find ("audio").GetComponent<AudioSource> ().Stop ();
+	}
+
+
+	public void openMusic() {
+
+		PlayerPrefs.SetString ("closeMusic", "" + 0);
+		playAudio ();
+		music.image.sprite = musicOn;
+		music1.image.sprite = musicOn;
+	}
+
+	public void closeMusic() {
+
+		PlayerPrefs.SetString ("closeMusic", "" + 1);
+		stopAudio ();
+		music.image.sprite = musicOff;
+		music1.image.sprite = musicOff;
+	}
+
+	public void onMusicClick() {
+
+		string str1 = PlayerPrefs.GetString("closeMusic", "null");
+		if (!str1.Equals ("null") && int.Parse (str1) == 1) {
+			openMusic ();
+		} else {
+			closeMusic ();
+		}
+	}
+
+	public void initMusicBtn() {
+
+		string str1 = PlayerPrefs.GetString("closeMusic", "null");
+		if (!str1.Equals ("null") && int.Parse (str1) == 1) {
+			music.image.sprite = musicOff;
+		} else {
+			music.image.sprite = musicOn;
+		}
+
+	}
+
+	public void initMusicBtn1() {
+
+		string str1 = PlayerPrefs.GetString("closeMusic", "null");
+		if (!str1.Equals ("null") && int.Parse (str1) == 1) {
+			music1.image.sprite = musicOff;
+		} else {
+			music1.image.sprite = musicOn;
+		}
+
 	}
 }

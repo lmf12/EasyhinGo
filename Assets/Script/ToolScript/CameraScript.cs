@@ -45,6 +45,11 @@ public class CameraScript : MonoBehaviour {
 
 	public void PlaySound (int id,bool loop, float vol)
 	{
+		string str1 = PlayerPrefs.GetString("closeMusic", "null");
+		if (!str1.Equals ("null") && int.Parse (str1) == 1) {
+			return;
+		}
+
 		int c = FindChannel();
 		if (c == -1)
 		{
