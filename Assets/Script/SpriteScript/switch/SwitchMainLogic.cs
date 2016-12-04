@@ -47,8 +47,11 @@ public class SwitchMainLogic : MonoBehaviour {
 	private float originLocX;
 	private float originMainX;
 
-
-	public Text scorePrefab;
+	public Text score1;
+	public Text score2;
+	public Text score3;
+	public Text score4;
+	public Text score5;
 	private Text[] scoreList;
 
 	public Image scoreBgPrefab;
@@ -259,12 +262,13 @@ public class SwitchMainLogic : MonoBehaviour {
 		}
 
 		scoreList = new Text[5];
+		scoreList [0] = score1;
+		scoreList [1] = score2;
+		scoreList [2] = score3;
+		scoreList [3] = score4;
+		scoreList [4] = score5;
 
 		for (int i = 0; i < 5; ++i) {
-
-			scoreList[i] = (Text)Instantiate (scorePrefab, new Vector2(-100, -100), Quaternion.identity);
-			scoreList[i].transform.SetParent (GameObject.Find("scoreContent").transform);
-			scoreList [i].fontSize = 32;
 
 			//读取分数
 			string str = PlayerPrefs.GetString("score_" + i, "null");
