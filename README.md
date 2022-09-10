@@ -4,28 +4,28 @@
 
 #### 主界面
 
-![](https://raw.githubusercontent.com/lmf12/EasyhinGo/master/image1.jpg)
+![](https://github.com/lmf12/ImageHost/blob/master/EasyhinGo/image1.jpg)
 
 #### 制作人员
 
-![](https://raw.githubusercontent.com/lmf12/EasyhinGo/master/image2.jpg)
+![](https://github.com/lmf12/ImageHost/blob/master/EasyhinGo/image2.jpg)
 
 #### 关卡一：接人头
 
-![](https://raw.githubusercontent.com/lmf12/EasyhinGo/master/image3.jpg)
+![](https://github.com/lmf12/ImageHost/blob/master/EasyhinGo/image3.jpg)
 
 #### 关卡二：回答问题
 
-![](https://raw.githubusercontent.com/lmf12/EasyhinGo/master/image4.jpg)
+![](https://github.com/lmf12/ImageHost/blob/master/EasyhinGo/image4.jpg)
 
 #### 关卡三：拼图
 
-![](https://raw.githubusercontent.com/lmf12/EasyhinGo/master/image5.jpg)
+![](https://github.com/lmf12/ImageHost/blob/master/EasyhinGo/image5.jpg)
 
 #### 关卡四：收集金币
 
-![](https://raw.githubusercontent.com/lmf12/EasyhinGo/master/image6.jpg)
+![](https://github.com/lmf12/ImageHost/blob/master/EasyhinGo/image6.jpg)
 
 #### 关卡五：射气球
 
-![](https://raw.githubusercontent.com/lmf12/EasyhinGo/master/image7.jpg)
+![](https://github.com/lmf12/ImageHost/blob/master/EasyhinGo/image7.jpg)
